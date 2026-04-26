@@ -3,6 +3,60 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Hyrox">
+<link rel="apple-touch-icon" id="appIcon" href="">
+<script>
+(function(){
+  var c=document.createElement('canvas');
+  c.width=180;c.height=180;
+  var ctx=c.getContext('2d');
+  // background
+  ctx.fillStyle='#0B0B0D';
+  ctx.beginPath();
+  ctx.roundRect(0,0,180,180,40);
+  ctx.fill();
+  // top-left glow
+  var g1=ctx.createRadialGradient(36,36,0,36,36,108);
+  g1.addColorStop(0,'rgba(230,242,76,0.18)');
+  g1.addColorStop(1,'rgba(230,242,76,0)');
+  ctx.fillStyle=g1;
+  ctx.beginPath();ctx.roundRect(0,0,180,180,40);ctx.fill();
+  // bottom-right shadow
+  var g2=ctx.createRadialGradient(153,153,0,153,153,90);
+  g2.addColorStop(0,'rgba(0,0,0,0.5)');
+  g2.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g2;
+  ctx.beginPath();ctx.roundRect(0,0,180,180,40);ctx.fill();
+  // inner border
+  ctx.strokeStyle='rgba(230,242,76,0.1)';
+  ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.roundRect(2,2,176,176,38);ctx.stroke();
+  // H shadow
+  ctx.font='900 116px Inter,system-ui,sans-serif';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillStyle='rgba(0,0,0,0.5)';
+  ctx.fillText('H',92,94);
+  // H yellow
+  ctx.fillStyle='#E6F24C';
+  ctx.fillText('H',90,92);
+  // H highlight
+  var g3=ctx.createLinearGradient(0,20,0,90);
+  g3.addColorStop(0,'rgba(255,255,255,0.15)');
+  g3.addColorStop(1,'rgba(255,255,255,0)');
+  ctx.fillStyle=g3;
+  ctx.fillText('H',90,92);
+  // set as icon
+  var url=c.toDataURL('image/png');
+  document.getElementById('appIcon').href=url;
+  // also set favicon
+  var fav=document.createElement('link');
+  fav.rel='icon';fav.type='image/png';fav.href=url;
+  document.head.appendChild(fav);
+})();
+</script>
 <meta name="color-scheme" content="dark">
 <title>Hyrox · Heleen</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
