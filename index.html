@@ -39,16 +39,16 @@ html, body { background: var(--bg); height: 100%; overflow: hidden; }
 body { font-family: var(--font); color: var(--t1); -webkit-font-smoothing: antialiased; }
 
 /* ── SCREENS ── */
-.screen { position: absolute; inset: 0; bottom: calc(var(--tab-h) + var(--safe-bot)); overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; display: none; }
+.screen { position: absolute; inset: 0; bottom: 0; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; display: none; }
 .screen.active { display: block; }
 
 /* ── TAB BAR ── */
-.tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 500; height: calc(var(--tab-h) + var(--safe-bot)); background: rgba(11,11,13,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 0.5px solid var(--divider); display: flex; align-items: flex-start; padding-top: 10px; padding-bottom: var(--safe-bot); }
-.tab-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; border: none; background: transparent; cursor: pointer; color: var(--t3); transition: color .2s; padding: 0; }
-.tab-btn.active { color: var(--accent); }
-.tab-icon { font-size: 20px; line-height: 1; }
-.tab-label { font-size: 11px; font-weight: 600; letter-spacing: 0.2px; }
-.tab-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
+.tabbar { display: none; }
+
+
+
+
+
 
 /* ══════════════════════════
    HOME SCREEN
@@ -61,6 +61,7 @@ body { font-family: var(--font); color: var(--t1); -webkit-font-smoothing: antia
 /* Stats row */
 .stats-row { display: flex; gap: var(--xs); align-items: stretch; }
 .stat-card { background: var(--card); border-radius: var(--r-lg); padding: 12px; border: 0.5px solid var(--divider); min-width: 0; flex: 1; }
+.stat-card-roadmap { flex: 1; }
 .stat-card-roadmap { flex: 1.8; }
 .stat-label { font-size: 10px; font-weight: 600; color: var(--t3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
 .stat-value { font-size: 28px; font-weight: 800; color: var(--t1); letter-spacing: -0.5px; line-height: 1; }
@@ -266,20 +267,21 @@ body { font-family: var(--font); color: var(--t1); -webkit-font-smoothing: antia
 .btn-next-workout:disabled { opacity: .3; pointer-events: none; }
 
 /* ── TOAST ── */
-.toast { position: fixed; bottom: calc(var(--tab-h) + var(--safe-bot) + 16px); left: 50%; transform: translateX(-50%) translateY(12px); background: var(--elevated); border: 0.5px solid var(--divider); color: var(--t1); padding: 11px 18px; border-radius: 14px; font-size: 14px; font-weight: 600; white-space: nowrap; opacity: 0; transition: all .3s cubic-bezier(.34,1.56,.64,1); pointer-events: none; z-index: 999; }
+.toast { position: fixed; bottom: calc(var(--safe-bot) + 16px); left: 50%; transform: translateX(-50%) translateY(12px); background: var(--elevated); border: 0.5px solid var(--divider); color: var(--t1); padding: 11px 18px; border-radius: 14px; font-size: 14px; font-weight: 600; white-space: nowrap; opacity: 0; transition: all .3s cubic-bezier(.34,1.56,.64,1); pointer-events: none; z-index: 999; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
 .stat-card-roadmap { overflow: hidden; }
-.roadmap-steps-inline { display: flex; flex-direction: row; align-items: center; gap: 3px; margin-top: 6px; overflow-x: auto; scrollbar-width: none; }
+.roadmap-steps-inline { display: flex; flex-direction: row; align-items: center; gap: 4px; overflow-x: auto; scrollbar-width: none; padding: 4px 0; }
 .roadmap-steps-inline::-webkit-scrollbar { display: none; }
 .roadmap-step-inline { display: flex; flex-direction: column; align-items: center; gap: 3px; flex-shrink: 0; }
 .pace-connector-sm { width: 8px; height: 1.5px; background: var(--divider); flex-shrink: 0; margin-bottom: 14px; }
 .pace-connector-sm.done { background: var(--success); }
-.pace-check-sm { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.pace-check-sm.done { background: var(--success); }
-.pace-check-sm.active { background: var(--warning); }
-.pace-check-sm.inactive { background: var(--divider); }
-.pace-val-sm { font-size: 10px; font-weight: 700; color: var(--t1); }
+.pace-check-sm { width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border: 1px solid transparent; }
+.pace-check-sm.done { background: rgba(111,227,106,.12); border-color: rgba(111,227,106,.3); }
+.pace-check-sm.active { background: rgba(245,185,66,.12); border-color: rgba(245,185,66,.4); }
+.pace-check-sm.inactive { background: var(--elevated); border-color: var(--divider); }
+.pace-val-sm { font-size: 10px; font-weight: 700; color: var(--t2); }
+.pace-val-sm.done { color: var(--success); }
 .pace-val-sm.active { color: var(--warning); }
 .pace-lbl-sm { font-size: 9px; color: var(--t3); font-weight: 500; white-space: nowrap; }
 
@@ -306,8 +308,8 @@ body { font-family: var(--font); color: var(--t1); -webkit-font-smoothing: antia
 .cal-day.state-done .cal-day-icon{background:rgba(111,227,106,.15);color:var(--success);}
 .cal-day.state-next .cal-day-icon{background:var(--card);color:var(--t2);}
 .cal-day-dot{width:5px;height:5px;border-radius:50%;margin-top:1px;}
-.cal-day.state-active .cal-day-dot{background:rgba(0,0,0,.35);}
-.cal-day.state-done .cal-day-dot{background:var(--success);}
+.cal-day.state-active .cal-day-dot{display:none;}
+.cal-day.state-done .cal-day-dot{display:none;}
 .cal-day.state-next .cal-day-dot{background:var(--divider);}
 
 /* ── COMBINED CARD ── */
@@ -362,13 +364,6 @@ body { font-family: var(--font); color: var(--t1); -webkit-font-smoothing: antia
             <div class="cw-pills" id="cwPills"></div>
           </div>
           <div class="cw-right">
-            <div class="cw-prog-ring">
-              <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
-                <circle class="cw-ring-bg" cx="22" cy="22" r="17"/>
-                <circle class="cw-ring-fill" id="cwRingFill" cx="22" cy="22" r="17"/>
-              </svg>
-              <div class="cw-ring-txt" id="cwRingTxt">0%</div>
-            </div>
             <div class="cw-arrow">›</div>
           </div>
         </div>
@@ -390,8 +385,13 @@ body { font-family: var(--font); color: var(--t1); -webkit-font-smoothing: antia
         <div class="stat-fase-name" id="homeActiveFase">—</div>
         <div class="stat-sub" id="homeActiveWeek">Week —</div>
       </div>
-      <div class="stat-card stat-card-roadmap">
-        <div class="stat-label">Pace doel</div>
+
+    </div>
+
+    <!-- Pace roadmap -->
+    <div>
+      <div class="section-label" style="margin-bottom:var(--sm)">Pace doel</div>
+      <div class="roadmap-card">
         <div class="roadmap-steps-inline" id="roadmapSteps"></div>
       </div>
     </div>
@@ -435,17 +435,6 @@ body { font-family: var(--font); color: var(--t1); -webkit-font-smoothing: antia
   <div class="detail-scroll" id="detailContent"></div>
 </div>
 
-<!-- TAB BAR -->
-<nav class="tabbar" role="navigation" aria-label="Navigatie">
-  <button class="tab-btn active" id="tab-home" onclick="goTab('home')" aria-label="Home">
-    <div class="tab-icon">&#9671;</div>
-    <div class="tab-label">Home</div>
-  </button>
-  <button class="tab-btn" id="tab-plan" onclick="goTab('plan')" aria-label="Plan">
-    <div class="tab-icon">&#9776;</div>
-    <div class="tab-label">Plan</div>
-  </button>
-</nav>
 
 <!-- BOTTOM SHEET -->
 <div class="overlay" id="overlay" onclick="closeSheet()"></div>
@@ -1077,13 +1066,16 @@ function findNext(){
 // ── PACE ROADMAP ──
 function renderRoadmap(){
   const el=document.getElementById('roadmapSteps');
+  if(!el)return;
   el.innerHTML='';
   PACES.forEach((p,i)=>{
     const step=document.createElement('div');
     step.className='roadmap-step-inline';
+    const valClass=p.state==='active'?' active':p.state==='done'?' done':'';
     step.innerHTML=`
-      <div class="pace-check-sm ${p.state}"></div>
-      <div class="pace-val-sm${p.state==='active'?' active':''}">${p.val}</div>
+      <div class="pace-check-sm ${p.state}">
+        <span style="font-size:9px;font-weight:800;color:${p.state==='done'?'var(--success)':p.state==='active'?'var(--warning)':'var(--t3)'}">${p.val}</span>
+      </div>
       <div class="pace-lbl-sm">${p.lbl}</div>
     `;
     el.appendChild(step);
@@ -1186,6 +1178,10 @@ function openFaseDetail(fase){
     const complete=done===total&&total>0;
     const circ=82,offset=circ-(circ*wpct/100);
 
+    const totalDaysD=wd.days.length;
+    const doneDaysD=wd.days.filter((d,di)=>d.ex.every((_,ei)=>S[ck(wd.w,di,ei)])).length;
+    const deloadTagD=wd.d?'<span class="wtag tdl" style="margin-left:6px">Deload</span>':'';
+
     const row=document.createElement('div');
     row.className=`wrow${complete?' wdone':''}`;
     row.setAttribute('tabindex','0');
@@ -1197,10 +1193,9 @@ function openFaseDetail(fase){
         <div class="wbadge-l">week</div>
       </div>
       <div class="wrow-info">
-        <div class="wrow-title">Week ${wd.w}${complete?' — Voltooid':''}</div>
-        <div class="wrow-meta">
-          <span class="wtag ${tagCls(wd.f,wd.d)}">${tagTxt(wd.f,wd.d)}</span>
-          <span class="wrow-prog">${done}/${total}</span>
+        <div class="wrow-meta" style="margin-top:2px">
+          ${wd.d?'<span class="wtag tdl" style="margin-right:6px">Deload</span>':''}
+          <span class="wrow-prog">${doneDaysD} / ${totalDaysD} workouts</span>
         </div>
       </div>
       <div class="wrow-ring" aria-hidden="true">
@@ -1230,6 +1225,11 @@ function renderPlanScreen(){
       const complete=done===total&&total>0;
       const circ=82,offset=circ-(circ*pct/100);
 
+      // Count workouts (days) done vs total
+      const totalDays=wd.days.length;
+      const doneDays=wd.days.filter((d,di)=>d.ex.every((_,ei)=>S[ck(wd.w,di,ei)])).length;
+      const deloadTag=wd.d?'<span class="wtag tdl" style="margin-left:6px">Deload</span>':'';
+
       const row=document.createElement('div');
       row.className=`wrow${complete?' wdone':''}`;
       row.id=`wr-${wd.w}`;
@@ -1242,10 +1242,9 @@ function renderPlanScreen(){
           <div class="wbadge-l">week</div>
         </div>
         <div class="wrow-info">
-          <div class="wrow-title">Week ${wd.w}${complete?' — Voltooid':''}</div>
-          <div class="wrow-meta">
-            <span class="wtag ${tagCls(wd.f,wd.d)}">${tagTxt(wd.f,wd.d)}</span>
-            <span class="wrow-prog" id="wrp-${wd.w}">${done}/${total}</span>
+          <div class="wrow-meta" style="margin-top:2px">
+            ${wd.d?'<span class="wtag tdl" style="margin-right:6px">Deload</span>':''}
+            <span class="wrow-prog" id="wrp-${wd.w}">${doneDays} / ${totalDays} workouts</span>
           </div>
         </div>
         <div class="wrow-ring" aria-hidden="true">
@@ -1289,11 +1288,7 @@ function openSheet(w,di){
 
   document.getElementById('sheetEyebrow').textContent=`Week ${w} · ${phaseName(wd.f)}${wd.d?' · Deload':''}`;
   document.getElementById('sheetTitle').textContent=dayData.day;
-  document.getElementById('sheetPills').innerHTML=`
-    <span class="pill pill-type-${ti.cls}">${ti.lbl}</span>
-    <span class="pill pill-week">Week ${w}</span>
-    <span class="pill pill-fase">${phaseName(wd.f)}</span>
-  `;
+  document.getElementById('sheetPills').innerHTML=`<span class="pill pill-type-${ti.cls}">${ti.lbl}</span>`;
 
   renderSheetBody(w,di);
   updateSheetFooter(w,di);
@@ -1408,11 +1403,7 @@ function goNextWorkout(){
         const ti=typeInfo(dayData.type);
         document.getElementById('sheetEyebrow').textContent=`Week ${wd.w} · ${phaseName(wd.f)}${wd.d?' · Deload':''}`;
         document.getElementById('sheetTitle').textContent=dayData.day;
-        document.getElementById('sheetPills').innerHTML=`
-          <span class="pill pill-type-${ti.cls}">${ti.lbl}</span>
-          <span class="pill pill-week">Week ${wd.w}</span>
-          <span class="pill pill-fase">${phaseName(wd.f)}</span>
-        `;
+        document.getElementById('sheetPills').innerHTML=`<span class="pill pill-type-${ti.cls}">${ti.lbl}</span>`;
         renderSheetBody(wd.w,di);
         updateSheetFooter(wd.w,di);
         // Scroll sheet body to top
@@ -1481,15 +1472,8 @@ function markAllSheet(){
 // ── NAVIGATION ──
 function goTab(tab){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   const screen=document.getElementById(`screen-${tab}`);
   if(screen)screen.classList.add('active');
-  const tabBtn=document.getElementById(`tab-${tab}`);
-  if(tabBtn)tabBtn.classList.add('active');
-  // detail screen doesn't have a tab
-  if(tab==='detail'){
-    document.getElementById('tab-home').classList.add('active');
-  }
 }
 
 function switchPhase(fase,btn){
@@ -1629,19 +1613,9 @@ function renderCombinedWorkout(w, di){
   document.getElementById('cwDay').textContent=dayData.day;
 
   // Pills
-  document.getElementById('cwPills').innerHTML=`
-    <span class="pill pill-type-${ti.cls}">${ti.lbl}</span>
-    <span class="pill pill-week">Week ${w}</span>
-    <span class="pill pill-fase">${phaseName(wd.f)}</span>
-  `;
+  document.getElementById('cwPills').innerHTML=`<span class="pill pill-type-${ti.cls}">${ti.lbl}</span>`;
 
-  // Progress ring
-  const circ=107;
-  const ring=document.getElementById('cwRingFill');
-  const txt=document.getElementById('cwRingTxt');
   const wrap=document.getElementById('combinedWorkout');
-  if(ring) ring.style.strokeDashoffset=circ-(circ*pct/100);
-  if(txt) txt.textContent=pct+'%';
   if(wrap) wrap.classList.toggle('cw-done', allDone);
 
   // Store for openSelectedWorkout
@@ -1661,6 +1635,37 @@ function calNav(dir){
   calSelectedDi=null; // reset to first/next day of new week
   renderCal();
 }
+
+
+// ── SWIPE TO CLOSE SHEET ──
+(function(){
+  const sheet=document.getElementById('sheet');
+  let startY=0, currentY=0, dragging=false;
+  sheet.addEventListener('touchstart',(e)=>{
+    if(e.target.closest('.sheet-body')) return; // don't interfere with scroll
+    startY=e.touches[0].clientY;
+    dragging=true;
+    sheet.style.transition='none';
+  },{passive:true});
+  sheet.addEventListener('touchmove',(e)=>{
+    if(!dragging) return;
+    currentY=e.touches[0].clientY;
+    const dy=Math.max(0, currentY-startY);
+    sheet.style.transform=`translateY(${dy}px)`;
+  },{passive:true});
+  sheet.addEventListener('touchend',()=>{
+    if(!dragging) return;
+    dragging=false;
+    sheet.style.transition='';
+    const dy=currentY-startY;
+    if(dy>80){
+      closeSheet();
+    } else {
+      sheet.style.transform='';
+    }
+    startY=0; currentY=0;
+  });
+})();
 
 // ── INIT ──
 load();
