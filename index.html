@@ -467,7 +467,7 @@ const PLAN=[
     ]},
     {day:'Woensdag',type:'r',ex:[
       {n:'Inlopen easy',s:'10 min',note:'',wt:false},
-      {n:'VO2max: 6x800m',s:'@ 5:00/km',note:'2 min herstel — elke 3e week',wt:false},
+      {n:'VO2max: 6x400m',s:'@ 4:55/km',note:'2 min herstel — eerste VO2max introductie, korte herhalingen',wt:false},
       {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
     ]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'35 min',note:'Na VO2max dag — rustig blijven.',wt:false}]},
@@ -516,7 +516,7 @@ const PLAN=[
       {n:'Tempo run 2x15 min',s:'@ 5:20/km',note:'2 min herstel',wt:false},
       {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
     ]},
-    {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'35 min',note:'Neus-ademhaling. Volume dag.',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'35 min',note:'Laatste 10 min: 6x20 sec strides @ 4:50/km. 40 sec wandelen ertussen. Loopefficiëntie.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x4',note:'',wt:true},
       {n:'Pendlay Row',s:'4x8 (+gewicht)',note:'',wt:true},
@@ -541,7 +541,7 @@ const PLAN=[
       {n:'Wall Balls — Finisher',s:'3x18',note:'',wt:true},
     ]},
     {day:'Woensdag',type:'r',ex:[{n:'Tempo run 2x15 min',s:'@ 5:20/km',note:'90 sec herstel',wt:false}]},
-    {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'35 min',note:'Neus-ademhaling.',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'35 min',note:'Laatste 10 min: 6x20 sec strides @ 4:50/km. 40 sec wandelen ertussen.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x4',note:'',wt:true},
       {n:'Pendlay Row',s:'4x8',note:'',wt:true},
@@ -565,8 +565,8 @@ const PLAN=[
       {n:'Hip Thrust',s:'4x10',note:'+1 set',wt:true},
       {n:'Wall Balls — Finisher',s:'4x18',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'VO2max: 7x800m',s:'@ 4:55/km',note:'2 min herstel',wt:false}]},
-    {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'40 min',note:'Neus-ademhaling. Opbouw naar 40 min.',wt:false}]},
+    {day:'Woensdag',type:'r',ex:[{n:'VO2max: 6x800m',s:'@ 4:55/km',note:'2 min herstel — opbouw van 400m naar 800m',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'40 min',note:'Laatste 10 min: 8x20 sec strides @ 4:45/km. 40 sec wandelen ertussen.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x4 (+2.5kg)',note:'',wt:true},
       {n:'Pendlay Row',s:'4x8',note:'',wt:true},
@@ -622,6 +622,8 @@ const PLAN=[
       {n:'Sled Pull',s:'4x25m',note:'',wt:true},
       {n:'Burpee Broad Jump',s:'4x25m',note:'',wt:false},
       {n:'Roeien',s:'4x250m',note:'Nieuw station',wt:false},
+      {n:'Farmers Carry',s:'2x50m',note:'Terugkeer fase 2 — grip en loophouding',wt:true},
+      {n:'Ski Erg',s:'2x250m easy',note:'Station introductie fase 2',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'4x20',note:'',wt:true},
     ]},
   ]},
@@ -647,6 +649,8 @@ const PLAN=[
       {n:'Sled Pull',s:'4x25m',note:'',wt:true},
       {n:'Roeien',s:'4x250m',note:'',wt:false},
       {n:'Sandbag Lunge',s:'2x20m',note:'',wt:true},
+      {n:'Farmers Carry',s:'2x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'2x250m',note:'',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'4x20',note:'',wt:true},
     ]},
   ]},
@@ -672,6 +676,8 @@ const PLAN=[
       {n:'Burpee Broad Jump',s:'4x25m',note:'',wt:false},
       {n:'Roeien',s:'4x250m',note:'',wt:false},
       {n:'Sandbag Lunge',s:'3x20m',note:'',wt:true},
+      {n:'Farmers Carry',s:'2x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'3x250m',note:'+1 set',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'4x20',note:'',wt:true},
     ]},
   ]},
@@ -710,6 +716,8 @@ const PLAN=[
     {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'75 min',note:'',wt:false}]},
     {day:'Zondag',type:'c',ex:[
       {n:'Race simulatie: 2 ronden',s:'1km @ 5:30 + sled pull + burpee BJ',note:'Eerste race simulatie',wt:false},
+      {n:'Farmers Carry',s:'2x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'3x250m',note:'',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'4x20',note:'',wt:true},
     ]},
   ]},
@@ -732,6 +740,8 @@ const PLAN=[
     {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'75 min',note:'',wt:false}]},
     {day:'Zondag',type:'c',ex:[
       {n:'Race simulatie: 3 ronden',s:'1km @ 5:30 + sled pull + roeien',note:'',wt:false},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'3x250m',note:'',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'4x22',note:'',wt:true},
     ]},
   ]},
@@ -754,6 +764,8 @@ const PLAN=[
     {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'78 min',note:'',wt:false}]},
     {day:'Zondag',type:'c',ex:[
       {n:'Race simulatie: 3 ronden',s:'1km @ 5:25 + burpee BJ + lunge',note:'Lunge in circuit',wt:false},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'3x250m',note:'',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
     ]},
   ]},
@@ -791,6 +803,8 @@ const PLAN=[
     {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'80 min',note:'Langste run tot nu toe',wt:false}]},
     {day:'Zondag',type:'c',ex:[
       {n:'Race simulatie: 4 ronden',s:'1km @ 5:25 + wisselende stations',note:'',wt:false},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'4x250m',note:'Race pace',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
     ]},
   ]},
@@ -813,6 +827,8 @@ const PLAN=[
     {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'80 min',note:'',wt:false}]},
     {day:'Zondag',type:'c',ex:[
       {n:'Volledige race simulatie',s:'4 ronden: 1km @ 5:25 + alle stations doubles',note:'Grote test fase 2',wt:false},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'4x250m',note:'Grote test fase 2 — alle stations',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
     ]},
   ]},
@@ -836,6 +852,8 @@ const PLAN=[
     {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'80 min',note:'',wt:false}]},
     {day:'Zondag',type:'c',ex:[
       {n:'Race simulatie: 6 ronden',s:'1km @ 5:20 + alle stations doubles',note:'',wt:false},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'4x250m',note:'',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
     ]},
   ]},
@@ -858,6 +876,8 @@ const PLAN=[
     {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'80 min',note:'',wt:false}]},
     {day:'Zondag',type:'c',ex:[
       {n:'Race simulatie: 7 ronden',s:'1km @ 5:20 + alle stations doubles',note:'',wt:false},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'4x250m',note:'',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
     ]},
   ]},
@@ -879,6 +899,8 @@ const PLAN=[
     {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'80 min',note:'',wt:false}]},
     {day:'Zondag',type:'c',ex:[
       {n:'Volledige race simulatie: 8 ronden',s:'1km @ 5:20 + alle stations doubles',note:'Grootste test voor race dag',wt:false},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'4x250m',note:'',wt:false},
       {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
     ]},
   ]},
@@ -898,7 +920,9 @@ const PLAN=[
     {day:'Zaterdag',type:'r',ex:[{n:'Easy run',s:'70 min',note:'Vers blijven',wt:false}]},
     {day:'Zondag',type:'c',ex:[
       {n:'Race simulatie: 6 ronden',s:'1km @ 5:15 + alle stations',note:'Sub 1:20 pace testen',wt:false},
-      {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Ski Erg',s:'4x250m',note:'Sub 1:20 pace',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'4x15',note:'Race pace — geen uitputting meer',wt:true},
     ]},
   ]},
   {w:23,f:'fase3',d:false,days:[
@@ -916,7 +940,8 @@ const PLAN=[
     {day:'Zaterdag',type:'r',ex:[{n:'Easy run',s:'60 min',note:'Taper',wt:false}]},
     {day:'Zondag',type:'c',ex:[
       {n:'Race simulatie: 4 ronden licht',s:'1km @ 5:30 + stations',note:'Niet uitputten',wt:false},
-      {n:'Wall Balls licht',s:'2x15',note:'',wt:true},
+      {n:'Ski Erg',s:'2x250m easy',note:'Taper',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'2x15',note:'Taper — licht',wt:true},
     ]},
   ]},
   {w:24,f:'fase3',d:true,days:[
