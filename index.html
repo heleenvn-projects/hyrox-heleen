@@ -68,7 +68,7 @@
   --blue:#4C7DF2;--blue-bg:rgba(76,125,242,.13);
   --orange:#F5B942;--orange-bg:rgba(245,185,66,.13);
   --green:#6FE36A;--green-bg:rgba(111,227,106,.13);
-  --teal:#5DCAA5;--teal-dark:#1D4D3A;--teal-bg:rgba(93,202,165,.13);
+  --teal:#4C7DF2;--teal-dark:#1a2d5a;--teal-bg:rgba(76,125,242,.13);
   --red:#F24C4C;--red-bg:rgba(242,76,76,.13);
   --col-k:var(--orange);--col-k-bg:var(--orange-bg);
   --col-r:var(--blue);--col-r-bg:var(--blue-bg);
@@ -110,7 +110,7 @@ body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;
 /* fase cards horizontal */
 .fase-card{flex-shrink:0;width:152px;background:var(--card);border-radius:var(--r-lg);padding:14px;border:0.5px solid var(--div);cursor:pointer;transition:opacity .15s;}
 .fase-card:active{opacity:.8;}
-.fc-active-card{border-color:rgba(230,242,76,.35);}
+.fc-active-card{border:2px solid rgba(230,242,76,.75);}
 .fc-status-pill{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 8px;border-radius:999px;display:inline-block;margin-bottom:9px;}
 .fc-active-card .fc-status-pill{background:var(--yellow-bg);color:var(--yellow);}
 .fc-inactive-card .fc-status-pill{background:rgba(255,255,255,.05);color:var(--t3);}
@@ -128,23 +128,23 @@ body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;
 .big-card{flex:1;border-radius:var(--r-xl);padding:18px 16px;min-height:168px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:opacity .15s;}
 .big-card:active{opacity:.85;}
 .bc-workout{background:var(--yellow);}
-.bc-food{background:var(--teal-dark);border:0.5px solid rgba(93,202,165,.2);}
+.bc-food{background:var(--teal-dark);border:0.5px solid rgba(76,125,242,.25);}
 .bc-ey{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
 .bc-workout .bc-ey{color:rgba(0,0,0,.4);}
-.bc-food .bc-ey{color:rgba(93,202,165,.7);}
+.bc-food .bc-ey{color:rgba(76,125,242,.8);}
 .bc-ttl{font-size:22px;font-weight:800;letter-spacing:-.5px;line-height:1.1;margin-bottom:7px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
 .bc-workout .bc-ttl{color:var(--tinv);}
-.bc-food .bc-ttl{color:#fff;}
+.bc-food .bc-ttl{color:var(--t1);}
 .bc-type-tag{font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;}
 .bc-workout .bc-type-tag{background:rgba(0,0,0,.1);color:var(--tinv);}
-.bc-food-sub{font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:rgba(93,202,165,.15);color:var(--teal);display:inline-block;}
+.bc-food-sub{font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;background:rgba(76,125,242,.15);color:var(--teal);display:inline-block;}
 .bc-ft{display:flex;align-items:center;justify-content:space-between;margin-top:14px;}
 .bc-ft-lbl{font-size:10px;}
 .bc-workout .bc-ft-lbl{color:rgba(0,0,0,.4);}
-.bc-food .bc-ft-lbl{color:rgba(255,255,255,.35);}
+.bc-food .bc-ft-lbl{color:rgba(76,125,242,.7);}
 .bc-arr{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;}
 .bc-workout .bc-arr{background:rgba(0,0,0,.12);color:var(--tinv);}
-.bc-food .bc-arr{background:rgba(93,202,165,.15);color:var(--teal);}
+.bc-food .bc-arr{background:rgba(76,125,242,.2);color:var(--blue);}
 
 /* calendar */
 .cal-section{padding:0 20px;}
@@ -235,18 +235,18 @@ body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;
 .food-item-header{display:flex;align-items:center;padding:13px 14px;cursor:pointer;gap:10px;user-select:none;-webkit-user-select:none;}
 .food-item-header:active{background:rgba(255,255,255,.04);}
 .food-item-num{width:22px;height:22px;border-radius:6px;background:var(--elevated);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--t3);flex-shrink:0;}
-.food-item-name{flex:1;font-size:14px;font-weight:600;color:var(--t1);line-height:1.3;}
+.food-item-name{flex:1;font-size:14px;font-weight:700;color:var(--t1);line-height:1.3;}
 .food-item-kcal{font-size:11px;font-weight:700;color:var(--orange);background:var(--orange-bg);padding:2px 8px;border-radius:999px;flex-shrink:0;}
 .food-item-chev{color:var(--t3);font-size:14px;transition:transform .2s;flex-shrink:0;}
 .food-item.open .food-item-chev{transform:rotate(90deg);}
 .food-item-body{display:none;padding:0 14px 14px 46px;}
 .food-item.open .food-item-body{display:block;}
-.food-item-desc{font-size:13px;color:var(--t2);line-height:1.6;margin-bottom:10px;}
+.food-item-desc{font-size:13px;color:var(--t1);line-height:1.6;margin-bottom:10px;}
 .food-macros{display:flex;gap:6px;flex-wrap:wrap;}
 .macro-p{background:var(--blue-bg);color:var(--blue);}
 .macro-c{background:var(--yellow-bg);color:var(--yellow);}
 .macro-f{background:var(--orange-bg);color:var(--orange);}
-.food-note{font-size:11px;color:var(--teal);font-style:italic;margin-top:7px;}
+.food-note{font-size:11px;color:var(--yellow);font-style:italic;margin-top:7px;}
 .food-suppl{background:var(--elevated);border-radius:var(--r);padding:12px 14px;margin-top:12px;font-size:12px;color:var(--t2);line-height:1.5;border:0.5px solid var(--div);}
 
 /* ══ SHEET ══ */
@@ -302,10 +302,6 @@ body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;
     <div class="home-greeting" id="homeGreeting"></div>
     <div class="home-name">Workout Plan Heleen</div>
   </div>
-  <div>
-    <div class="eyebrow" style="padding:0 20px;margin-bottom:10px">Fases</div>
-    <div class="hscroll" id="faseCards"></div>
-  </div>
   <div class="big-cards">
     <div class="big-card bc-workout" id="nextCard" role="button" tabindex="0"
       onclick="openNextWorkout()"
@@ -332,6 +328,10 @@ body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;
         <div class="bc-arr">›</div>
       </div>
     </div>
+  </div>
+  <div>
+    <div class="eyebrow" style="padding:0 20px;margin-bottom:10px">Fases</div>
+    <div class="hscroll" id="faseCards"></div>
   </div>
   <div class="cal-section">
     <div class="cal-hdr">
@@ -416,7 +416,7 @@ body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;
     <div class="food-panel" id="fp-lunch"></div>
     <div class="food-panel" id="fp-avond"></div>
     <div class="food-suppl" id="foodSuppl" style="display:none">
-      <b style="color:var(--yellow)">Supplementen:</b> Creatine 3–5g/dag in shake of yoghurt. Laat ijzer en vitamine D jaarlijks checken.
+      <b style="color:var(--blue)">Supplementen:</b> Creatine 3–5g/dag in shake of yoghurt. Laat ijzer en vitamine D jaarlijks checken.
     </div>
   </div>
 </div>
