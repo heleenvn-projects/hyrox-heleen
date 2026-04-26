@@ -103,7 +103,7 @@ body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;
 .home-scroll{padding:calc(var(--safe-top) + 14px) 0 calc(var(--safe-bot) + 28px);display:flex;flex-direction:column;gap:22px;}
 .home-title{padding:0 20px;}
 .home-greeting{font-size:13px;color:var(--t3);font-weight:500;margin-bottom:2px;}
-.home-name{font-size:42px;font-weight:800;letter-spacing:-2px;line-height:1;}
+.home-name{font-size:32px;font-weight:800;letter-spacing:-1px;line-height:1.1;}
 .hscroll{display:flex;gap:10px;padding:0 20px 4px;overflow-x:auto;scrollbar-width:none;}
 .hscroll::-webkit-scrollbar{display:none;}
 
@@ -299,8 +299,8 @@ body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;
 <div class="screen active" id="screen-home">
 <div class="home-scroll">
   <div class="home-title">
-    <div class="home-greeting">Goedemorgen,</div>
-    <div class="home-name">Heleen</div>
+    <div class="home-greeting" id="homeGreeting"></div>
+    <div class="home-name">Workout Plan Heleen</div>
   </div>
   <div>
     <div class="eyebrow" style="padding:0 20px;margin-bottom:10px">Fases</div>
@@ -325,7 +325,7 @@ body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;
       <div>
         <div class="bc-ey">Voedingsplan</div>
         <div class="bc-ttl">Hybrid athlete</div>
-        <span class="bc-food-sub">80% plantaardig</span>
+        
       </div>
       <div class="bc-ft">
         <span class="bc-ft-lbl">Ontbijt · Lunch · Diner</span>
@@ -446,18 +446,18 @@ body{font-family:var(--font);color:var(--t1);-webkit-font-smoothing:antialiased;
 <script>
 const PLAN=[
   {w:1,f:'fase1',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[
+      {n:'Inlopen easy',s:'10-15 min',note:'Neus-ademhaling Z2',wt:false},
+      {n:'Tempo run 3x8 min',s:'@ 5:25/km',note:'2 min herstel',wt:false},
+      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
+    ]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Warming-up mobiliteit heup',s:'10 min',note:'Fysio iliopsoas stretches — altijd eerst',wt:false},
       {n:'Barbell Back Squat',s:'4x6',note:'',wt:true},
       {n:'Romanian Deadlift',s:'3x8',note:'Controle neergaande fase',wt:true},
       {n:'Bulgarian Split Squat',s:'3x8 lichaamsgewicht',note:'Lunge vervanger fase 1',wt:true},
       {n:'Hip Thrust (barbell)',s:'3x12',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'3x12',note:'Altijd als laatste',wt:true},
-    ]},
-    {day:'Woensdag',type:'r',ex:[
-      {n:'Inlopen easy',s:'10-15 min',note:'Neus-ademhaling Z2',wt:false},
-      {n:'Tempo run 3x8 min',s:'@ 5:25/km',note:'2 min herstel',wt:false},
-      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
     ]},
     {day:'Donderdag',type:'r',ex:[
       {n:'Easy run',s:'30 min',note:'Neus-ademhaling. Extra volume. Geen intensiteit.',wt:false},
@@ -482,18 +482,18 @@ const PLAN=[
     ]},
   ]},
   {w:2,f:'fase1',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[
+      {n:'Inlopen easy',s:'10 min',note:'',wt:false},
+      {n:'Tempo run 3x8 min',s:'@ 5:25/km',note:'90 sec herstel',wt:false},
+      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
+    ]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Warming-up mobiliteit heup',s:'10 min',note:'',wt:false},
       {n:'Barbell Back Squat',s:'4x6',note:'Zelfde gewicht week 1',wt:true},
       {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
       {n:'Bulgarian Split Squat',s:'3x8 BW',note:'',wt:true},
       {n:'Hip Thrust',s:'3x12',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'3x12',note:'Altijd als laatste',wt:true},
-    ]},
-    {day:'Woensdag',type:'r',ex:[
-      {n:'Inlopen easy',s:'10 min',note:'',wt:false},
-      {n:'Tempo run 3x8 min',s:'@ 5:25/km',note:'90 sec herstel',wt:false},
-      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
     ]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'30 min',note:'Neus-ademhaling. Herstel van woensdag.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
@@ -512,17 +512,17 @@ const PLAN=[
     ]},
   ]},
   {w:3,f:'fase1',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[
+      {n:'Inlopen easy',s:'10 min',note:'',wt:false},
+      {n:'VO2max: 6x400m',s:'@ 4:55/km',note:'2 min herstel — eerste VO2max introductie, korte herhalingen',wt:false},
+      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
+    ]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x6 (+2.5kg)',note:'Eerste gewichtsophoging',wt:true},
       {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
       {n:'Bulgarian Split Squat',s:'3x8 BW',note:'',wt:true},
       {n:'Hip Thrust',s:'3x12',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'3x14',note:'+2 reps',wt:true},
-    ]},
-    {day:'Woensdag',type:'r',ex:[
-      {n:'Inlopen easy',s:'10 min',note:'',wt:false},
-      {n:'VO2max: 6x400m',s:'@ 4:55/km',note:'2 min herstel — eerste VO2max introductie, korte herhalingen',wt:false},
-      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
     ]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'35 min',note:'Na VO2max dag — rustig blijven.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
@@ -541,13 +541,13 @@ const PLAN=[
     ]},
   ]},
   {w:4,f:'fase1',d:true,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Easy run',s:'20 min',note:'Neus-ademhaling. Geen tempo.',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'DELOAD — Squat',s:'3x6 @ 80%',note:'Lichter gewicht',wt:true},
       {n:'DELOAD — RDL',s:'2x8',note:'',wt:true},
       {n:'DELOAD — Split Squat',s:'2x8',note:'',wt:true},
       {n:'Wall Balls',s:'2x12',note:'Licht',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Easy run',s:'20 min',note:'Neus-ademhaling. Geen tempo.',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Rust of wandeling',s:'20-30 min',note:'Deload week — optioneel',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'DELOAD — Deadlift',s:'3x5 @ 80%',note:'',wt:true},
@@ -558,17 +558,17 @@ const PLAN=[
     {day:'Zondag',type:'c',ex:[{n:'Licht conditioning circuit',s:'30 min',note:'Geen max',wt:false}]},
   ]},
   {w:5,f:'fase1',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[
+      {n:'Inlopen easy',s:'10 min',note:'',wt:false},
+      {n:'Tempo run 2x15 min',s:'@ 5:20/km',note:'2 min herstel',wt:false},
+      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
+    ]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x5 (zwaarder)',note:'Rep verlaging = intensiteit omhoog',wt:true},
       {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
       {n:'Bulgarian Split Squat',s:'3x8 licht gewicht',note:'Eerste keer met gewicht',wt:true},
       {n:'Hip Thrust',s:'3x12',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'3x16',note:'',wt:true},
-    ]},
-    {day:'Woensdag',type:'r',ex:[
-      {n:'Inlopen easy',s:'10 min',note:'',wt:false},
-      {n:'Tempo run 2x15 min',s:'@ 5:20/km',note:'2 min herstel',wt:false},
-      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
     ]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'35 min',note:'Laatste 10 min: 6x20 sec strides @ 4:50/km. 40 sec wandelen ertussen. Loopefficiëntie.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
@@ -587,14 +587,14 @@ const PLAN=[
     ]},
   ]},
   {w:6,f:'fase1',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Tempo run 2x15 min',s:'@ 5:20/km',note:'90 sec herstel',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x5',note:'',wt:true},
       {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
       {n:'Bulgarian Split Squat',s:'3x8 (+gewicht)',note:'',wt:true},
       {n:'Hip Thrust',s:'3x12',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'3x18',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Tempo run 2x15 min',s:'@ 5:20/km',note:'90 sec herstel',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'35 min',note:'Laatste 10 min: 6x20 sec strides @ 4:50/km. 40 sec wandelen ertussen.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x4',note:'',wt:true},
@@ -612,14 +612,14 @@ const PLAN=[
     ]},
   ]},
   {w:7,f:'fase1',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'VO2max: 6x800m',s:'@ 4:55/km',note:'2 min herstel — opbouw van 400m naar 800m',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x5 (+2.5kg)',note:'',wt:true},
       {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
       {n:'Bulgarian Split Squat',s:'3x10',note:'+2 reps',wt:true},
       {n:'Hip Thrust',s:'4x10',note:'+1 set',wt:true},
       {n:'Wall Balls — Finisher',s:'4x18',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'VO2max: 6x800m',s:'@ 4:55/km',note:'2 min herstel — opbouw van 400m naar 800m',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'40 min',note:'Laatste 10 min: 8x20 sec strides @ 4:45/km. 40 sec wandelen ertussen.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x4 (+2.5kg)',note:'',wt:true},
@@ -637,13 +637,13 @@ const PLAN=[
     ]},
   ]},
   {w:8,f:'fase1',d:true,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Easy run',s:'25 min',note:'Neus-ademhaling',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'DELOAD — Squat',s:'3x5 @ 80%',note:'',wt:true},
       {n:'DELOAD — RDL',s:'2x8',note:'',wt:true},
       {n:'DELOAD — Split Squat',s:'2x8',note:'',wt:true},
       {n:'Wall Balls',s:'2x15',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Easy run',s:'25 min',note:'Neus-ademhaling',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Rust of wandeling',s:'20 min',note:'Deload week',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'DELOAD — Deadlift',s:'3x4 @ 80%',note:'',wt:true},
@@ -654,7 +654,8 @@ const PLAN=[
     {day:'Zondag',type:'c',ex:[{n:'Licht conditioning circuit',s:'30 min',note:'Fase 2 staat voor de deur',wt:false}]},
   ]},
   {w:9,f:'fase2',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Tempo run aaneengesloten',s:'30 min @ 5:15/km',note:'Sneller dan fase 1',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x5',note:'',wt:true},
       {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
       {n:'Bulgarian Split Squat',s:'3x10',note:'',wt:true},
@@ -662,7 +663,6 @@ const PLAN=[
       {n:'Hip Thrust',s:'4x10',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'4x18',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Tempo run aaneengesloten',s:'30 min @ 5:15/km',note:'Sneller dan fase 1',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'35 min',note:'Laatste 10 min: 6x20 sec acceleraties naar 4:30/km pace. 40 sec wandelen ertussen.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x4',note:'',wt:true},
@@ -682,14 +682,14 @@ const PLAN=[
     ]},
   ]},
   {w:10,f:'fase2',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Tempo run',s:'30 min @ 5:15/km',note:'',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x5 (+2.5kg)',note:'',wt:true},
       {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
       {n:'Sandbag Lunge',s:'2x20m BW',note:'Groin check',wt:true},
       {n:'Hip Thrust',s:'4x10',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'4x20',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Tempo run',s:'30 min @ 5:15/km',note:'',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'35 min',note:'6x20 sec strides aan het einde',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x4',note:'',wt:true},
@@ -709,13 +709,13 @@ const PLAN=[
     ]},
   ]},
   {w:11,f:'fase2',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'VO2max: 8x800m',s:'@ 4:50/km',note:'2 min herstel',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x5',note:'',wt:true},
       {n:'Sandbag Lunge',s:'3x20m licht',note:'+1 set',wt:true},
       {n:'Hip Thrust',s:'4x10',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'4x20',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'VO2max: 8x800m',s:'@ 4:50/km',note:'2 min herstel',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'40 min',note:'Na VO2max dag — rustig blijven. Neus-ademhaling.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x4',note:'',wt:true},
@@ -736,12 +736,12 @@ const PLAN=[
     ]},
   ]},
   {w:12,f:'fase2',d:true,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Easy run',s:'25 min',note:'',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'DELOAD — Squat',s:'3x5 @ 80%',note:'',wt:true},
       {n:'Lunge easy',s:'2x15m BW',note:'',wt:false},
       {n:'Wall Balls',s:'2x15',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Easy run',s:'25 min',note:'',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Rust of wandeling',s:'20 min',note:'Deload',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'DELOAD — Deadlift',s:'3x4 @ 80%',note:'',wt:true},
@@ -751,14 +751,14 @@ const PLAN=[
     {day:'Zondag',type:'c',ex:[{n:'Licht conditioning circuit',s:'35 min',note:'Geen max',wt:false}]},
   ]},
   {w:13,f:'fase2',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Tempo run aaneengesloten',s:'35 min @ 5:10/km',note:'Nieuwe T-pace target',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x4 (zwaarder)',note:'',wt:true},
       {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
       {n:'Sandbag Lunge',s:'3x30m',note:'Eerste keer 30m — groin check',wt:true},
       {n:'Hip Thrust',s:'4x10',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'4x20',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Tempo run aaneengesloten',s:'35 min @ 5:10/km',note:'Nieuwe T-pace target',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'40 min',note:'8x20 sec strides aan het einde @ 4:40/km',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x3',note:'',wt:true},
@@ -776,13 +776,13 @@ const PLAN=[
     ]},
   ]},
   {w:14,f:'fase2',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Tempo run',s:'35 min @ 5:10/km',note:'',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x4',note:'',wt:true},
       {n:'Sandbag Lunge',s:'3x30m (+gewicht)',note:'',wt:true},
       {n:'Hip Thrust',s:'4x10',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'4x22',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Tempo run',s:'35 min @ 5:10/km',note:'',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'40 min',note:'8x20 sec strides @ 4:40/km',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x3',note:'',wt:true},
@@ -800,13 +800,13 @@ const PLAN=[
     ]},
   ]},
   {w:15,f:'fase2',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'VO2max: 8x800m',s:'@ 4:45/km',note:'2 min herstel',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x4 (+2.5kg)',note:'',wt:true},
       {n:'Sandbag Lunge',s:'4x30m',note:'+1 set',wt:true},
       {n:'Hip Thrust',s:'4x10',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'1x max reps',note:'Eerste max set',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'VO2max: 8x800m',s:'@ 4:45/km',note:'2 min herstel',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'40 min',note:'Na VO2max — neus-ademhaling, geen druk',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x3',note:'',wt:true},
@@ -824,12 +824,12 @@ const PLAN=[
     ]},
   ]},
   {w:16,f:'fase2',d:true,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Easy run',s:'25 min',note:'',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'DELOAD — Squat',s:'3x4 @ 80%',note:'',wt:true},
       {n:'Lunge easy',s:'2x20m',note:'',wt:true},
       {n:'Wall Balls',s:'3x20',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Easy run',s:'25 min',note:'',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Rust of wandeling',s:'20 min',note:'Deload',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'DELOAD — Deadlift',s:'3x3 @ 80%',note:'',wt:true},
@@ -839,13 +839,13 @@ const PLAN=[
     {day:'Zondag',type:'c',ex:[{n:'Licht conditioning circuit',s:'30 min',note:'',wt:false}]},
   ]},
   {w:17,f:'fase2',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Tempo 2x20 min',s:'@ 5:05/km',note:'2 min herstel',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x4',note:'',wt:true},
       {n:'Sandbag Lunge',s:'4x40m',note:'Eerste keer 40m',wt:true},
       {n:'Hip Thrust',s:'4x10',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'4x22',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Tempo 2x20 min',s:'@ 5:05/km',note:'2 min herstel',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'40 min',note:'8x20 sec strides @ 4:35/km — pace bouwt op',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x3',note:'',wt:true},
@@ -863,13 +863,13 @@ const PLAN=[
     ]},
   ]},
   {w:18,f:'fase2',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Tempo 2x20 min',s:'@ 5:05/km',note:'',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x4',note:'',wt:true},
       {n:'Sandbag Lunge',s:'4x40m',note:'',wt:true},
       {n:'Hip Thrust',s:'4x10',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'1x max',note:'Meer dan week 15?',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Tempo 2x20 min',s:'@ 5:05/km',note:'',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'40 min',note:'8x20 sec strides @ 4:35/km',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x3',note:'',wt:true},
@@ -887,14 +887,14 @@ const PLAN=[
     ]},
   ]},
   {w:19,f:'fase3',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Tempo 2x22 min',s:'@ 5:00/km',note:'Nieuwe T-pace target',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x3 (max gewicht)',note:'Kracht piek',wt:true},
       {n:'Romanian Deadlift',s:'3x6',note:'',wt:true},
       {n:'Sandbag Lunge',s:'4x40m',note:'',wt:true},
       {n:'Hip Thrust',s:'4x8',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'1x max',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Tempo 2x22 min',s:'@ 5:00/km',note:'Nieuwe T-pace target',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Herstelrun',s:'30 min easy',note:'Na tempo dag. Neus-ademhaling. Geen druk.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x3',note:'',wt:true},
@@ -912,13 +912,13 @@ const PLAN=[
     ]},
   ]},
   {w:20,f:'fase3',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Tempo 2x22 min',s:'@ 5:00/km',note:'',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x3',note:'',wt:true},
       {n:'Sandbag Lunge',s:'4x40m',note:'',wt:true},
       {n:'Hip Thrust',s:'4x8',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'1x max',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Tempo 2x22 min',s:'@ 5:00/km',note:'',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Herstelrun',s:'30 min easy',note:'Neus-ademhaling',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x3',note:'',wt:true},
@@ -936,12 +936,12 @@ const PLAN=[
     ]},
   ]},
   {w:21,f:'fase3',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'VO2max: 8x800m',s:'@ 4:40/km',note:'Snelste interval tot nu toe',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'4x3',note:'',wt:true},
       {n:'Sandbag Lunge',s:'4x40m',note:'',wt:true},
       {n:'Wall Balls — Finisher',s:'1x max',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'VO2max: 8x800m',s:'@ 4:40/km',note:'Snelste interval tot nu toe',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Herstelrun',s:'30 min easy',note:'Na VO2max. Neus-ademhaling.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'4x3',note:'',wt:true},
@@ -959,12 +959,12 @@ const PLAN=[
     ]},
   ]},
   {w:22,f:'fase3',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Interval: 6x1km',s:'@ 4:50/km',note:'Race pace sharpening',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'3x3',note:'Volume daalt',wt:true},
       {n:'Sandbag Lunge',s:'3x30m',note:'Volume terug',wt:true},
       {n:'Wall Balls',s:'3x20',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Interval: 6x1km',s:'@ 4:50/km',note:'Race pace sharpening',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Herstelrun',s:'25 min easy',note:'Neus-ademhaling',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift',s:'3x3',note:'',wt:true},
@@ -980,12 +980,12 @@ const PLAN=[
     ]},
   ]},
   {w:23,f:'fase3',d:false,days:[
-    {day:'Maandag',type:'k',ex:[
+    {day:'Maandag',type:'r',ex:[{n:'Interval: 4x1km',s:'@ 4:50/km',note:'Minder volume, zelfde intensiteit',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[
       {n:'Barbell Back Squat',s:'3x3',note:'',wt:true},
       {n:'Sandbag Lunge',s:'2x20m',note:'Benen fris',wt:true},
       {n:'Wall Balls',s:'2x15',note:'',wt:true},
     ]},
-    {day:'Woensdag',type:'r',ex:[{n:'Interval: 4x1km',s:'@ 4:50/km',note:'Minder volume, zelfde intensiteit',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Herstelrun',s:'20 min easy',note:'Taper begint',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[
       {n:'Deadlift easy',s:'2x3 @ 80%',note:'',wt:true},
@@ -999,8 +999,8 @@ const PLAN=[
     ]},
   ]},
   {w:24,f:'fase3',d:true,days:[
-    {day:'Maandag',type:'k',ex:[{n:'Mobiliteit en fysio stretches',s:'20 min',note:'Geen zware lifts',wt:false}]},
-    {day:'Woensdag',type:'r',ex:[{n:'Easy run',s:'20 min',note:'Benen losmaken',wt:false}]},
+    {day:'Maandag',type:'r',ex:[{n:'Easy run',s:'20 min',note:'Benen losmaken',wt:false}]},
+    {day:'Woensdag',type:'k',ex:[{n:'Mobiliteit en fysio stretches',s:'20 min',note:'Geen zware lifts',wt:false}]},
     {day:'Donderdag',type:'r',ex:[{n:'Rust',s:'—',note:'Taper week. Niks.',wt:false}]},
     {day:'Vrijdag',type:'k',ex:[{n:'Lichte mobiliteit',s:'15 min',note:'',wt:false}]},
     {day:'Zaterdag',type:'r',ex:[{n:'Easy run',s:'30 min',note:'Laatste run voor race dag',wt:false}]},
@@ -1796,8 +1796,31 @@ function switchFood(cat, btn){
   if(btn){btn.classList.add('active');btn.setAttribute('aria-selected','true');}
 }
 
+
+// ── GREETING ──
+function updateGreeting(){
+  const h=new Date().getHours();
+  const msgs=[
+    // 05-09 ochtend
+    ['Train hard, recover smart.','Vandaag is een goede dag om beter te worden.','De discipline van vandaag is de snelheid van morgen.'],
+    // 09-12 ochtend
+    ['Elke rep telt.','Bouw aan je sterkste versie.','Focus. Werk. Resultaat.'],
+    // 12-17 middag
+    ['Halverwege de dag, nog lang niet klaar.','Energie op peil houden.','Jij kiest de intensiteit.'],
+    // 17-21 avond
+    ['Avondsessie? Laat het er uit.','De dag nog goed afsluiten.','Vermoeid of niet — jij verschijnt.'],
+    // 21-05 nacht
+    ['Herstel is ook training.','Rust hard, morgen harder.','Slaap = progressie.'],
+  ];
+  let idx=h>=5&&h<9?0:h>=9&&h<12?1:h>=12&&h<17?2:h>=17&&h<21?3:4;
+  const list=msgs[idx];
+  const el=document.getElementById('homeGreeting');
+  if(el) el.textContent=list[Math.floor(Math.random()*list.length)];
+}
+
 // ── INIT ──
 load();
+updateGreeting();
 renderPlanScreen();
 renderFood();
 calWeek=null; // will be set to active week on first render
