@@ -1384,9 +1384,12 @@ function updateSheetFooter(w,di){
 }
 
 function closeSheet(){
+  const sh=document.getElementById('sheet');
+  sh.classList.remove('show');
+  sh.style.transform='';
+  sh.style.transition='';
   document.getElementById('overlay').classList.remove('show');
-  document.getElementById('sheet').classList.remove('show');
-  document.getElementById('sheet').setAttribute('aria-hidden','true');
+  sh.setAttribute('aria-hidden','true');
   sheetW=null;sheetDi=null;
 }
 
@@ -1569,20 +1572,23 @@ function calNav(dir){
 
 
 // ── SWIPE TO CLOSE SHEET ──
-(function(){
+function initSwipeToClose(){
   const sheet=document.getElementById('sheet');
-  let startY=0, currentY=0, dragging=false;
+  if(!sheet) return;
+  let startY=0,currentY=0,dragging=false;
+  // Allow swipe from anywhere on the sheet except the scrollable body
   sheet.addEventListener('touchstart',(e)=>{
-    if(e.target.closest('.sheet-body')) return; // don't interfere with scroll
+    if(e.target.closest('.sheet-body')) return;
     startY=e.touches[0].clientY;
+    currentY=startY;
     dragging=true;
     sheet.style.transition='none';
   },{passive:true});
   sheet.addEventListener('touchmove',(e)=>{
     if(!dragging) return;
     currentY=e.touches[0].clientY;
-    const dy=Math.max(0, currentY-startY);
-    sheet.style.transform=`translateY(${dy}px)`;
+    const dy=Math.max(0,currentY-startY);
+    sheet.style.transform='translateY('+dy+'px)';
   },{passive:true});
   sheet.addEventListener('touchend',()=>{
     if(!dragging) return;
@@ -1590,13 +1596,14 @@ function calNav(dir){
     sheet.style.transition='';
     const dy=currentY-startY;
     if(dy>80){
+      sheet.style.transform='';
       closeSheet();
     } else {
       sheet.style.transform='';
     }
     startY=0; currentY=0;
   });
-})();
+}
 
 
 // ── FOOD DATA ──
@@ -1821,6 +1828,7 @@ function updateGreeting(){
 // ── INIT ──
 load();
 updateGreeting();
+initSwipeToClose();
 renderPlanScreen();
 renderFood();
 calWeek=null; // will be set to active week on first render
