@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Hyrox Training Plan Heleen</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Brand colors */
+  --bg:       #0B0B0D;
+  --bg2:      #141417;
+  --card:     #1C1C20;
+  --elevated: #242428;
+  --divider:  #2A2A2E;
+  --accent:   #E6F24C;
+  --accent2:  #A8B72A;
+  --t1:       #FFFFFF;
+  --t2:       #B3B3B8;
+  --t3:       #7C7C82;
+  --tinv:     #0B0B0D;
+  --success:  #6FE36A;
+  --warning:  #F5B942;
+  --error:    #F24C4C;
+  --blue:     #4C7DF2;
+  /* Spacing */
+  --xxs:4px;--xs:8px;--sm:12px;--md:16px;--lg:24px;--xl:32px;--xxl:40px;
+  /* Radius */
+  --r-sm:8px;--r-md:12px;--r-lg:16px;--r-xl:20px;--pill:999px;
+  /* Type */
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro', sans-serif;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bot: env(safe-area-inset-bottom, 0px);
+  --tab-h: 60px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { background: var(--bg); height: 100%; overflow: hidden; }
+body { font-family: var(--font); color: var(--t1); -webkit-font-smoothing: antialiased; }
+
+/* ── SCREENS ── */
+.screen { position: absolute; inset: 0; bottom: calc(var(--tab-h) + var(--safe-bot)); overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; display: none; }
+.screen.active { display: block; }
+
+/* ── TAB BAR ── */
+.tabbar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 500; height: calc(var(--tab-h) + var(--safe-bot)); background: rgba(11,11,13,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-top: 0.5px solid var(--divider); display: flex; align-items: flex-start; padding-top: 10px; padding-bottom: var(--safe-bot); }
+.tab-btn { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; border: none; background: transparent; cursor: pointer; color: var(--t3); transition: color .2s; padding: 0; }
+.tab-btn.active { color: var(--accent); }
+.tab-icon { font-size: 20px; line-height: 1; }
+.tab-label { font-size: 11px; font-weight: 600; letter-spacing: 0.2px; }
+.tab-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
+
+/* ══════════════════════════
+   HOME SCREEN
+══════════════════════════ */
+.home-scroll { padding: calc(var(--safe-top) + 20px) var(--md) calc(var(--md)); display: flex; flex-direction: column; gap: var(--md); }
+
+/* Page title */
+.page-title { font-size: 22px; font-weight: 700; color: var(--t1); letter-spacing: -0.3px; }
+
+/* Stats row */
+.stats-row { display: flex; gap: var(--xs); align-items: stretch; }
+.stat-card { background: var(--card); border-radius: var(--r-lg); padding: 12px; border: 0.5px solid var(--divider); min-width: 0; flex: 1; }
+.stat-card-roadmap { flex: 1.8; }
+.stat-label { font-size: 10px; font-weight: 600; color: var(--t3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.stat-value { font-size: 28px; font-weight: 800; color: var(--t1); letter-spacing: -0.5px; line-height: 1; }
+.stat-sub { font-size: 11px; color: var(--t2); margin-top: 3px; font-weight: 500; }
+.stat-fase-name { font-size: 14px; font-weight: 700; color: var(--t1); line-height: 1.2; margin-bottom: 3px; }
+.fase-stepper { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+.fase-chev { width: 20px; height: 20px; border: none; background: transparent; color: var(--t3); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 0; transition: color .15s; line-height: 1; font-family: var(--font); }
+.fase-chev:active { color: var(--accent); }
+.fase-chev:disabled { opacity: .2; pointer-events: none; }
+.fase-stepper-body { flex: 1; min-width: 0; }
+.fase-stepper-name { font-size: 11px; font-weight: 700; color: var(--t1); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fase-stepper-count { font-size: 13px; font-weight: 800; color: var(--t1); margin-bottom: 5px; letter-spacing: -0.2px; }
+.fase-stepper-bar { height: 4px; background: var(--divider); border-radius: 2px; overflow: hidden; }
+.fase-stepper-fill { height: 100%; border-radius: 2px; transition: width .5s ease; }
+.stat-ring-row { display: flex; align-items: center; gap: 8px; }
+.ring-wrap { position: relative; width: 40px; height: 40px; flex-shrink: 0; }
+.ring-wrap svg { transform: rotate(-90deg); }
+.ring-bg { fill: none; stroke: var(--divider); stroke-width: 6; }
+.ring-fill { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 107; stroke-dashoffset: 107; transition: stroke-dashoffset .6s cubic-bezier(.4,0,.2,1); }
+.ring-txt { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; color: var(--accent); }
+
+/* Pace roadmap */
+.section-label { font-size: 13px; font-weight: 700; color: var(--t2); text-transform: uppercase; letter-spacing: 0.5px; }
+.roadmap-card { background: var(--card); border-radius: var(--r-lg); padding: var(--md); border: 0.5px solid var(--divider); }
+.roadmap-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--md); }
+.roadmap-title { font-size: 15px; font-weight: 700; color: var(--t1); }
+.roadmap-steps { display: flex; align-items: center; gap: 0; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px; }
+.roadmap-steps::-webkit-scrollbar { display: none; }
+.pace-step { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 0 8px; }
+.pace-check { width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .2s; }
+.pace-check.done { background: var(--success); border: 1.5px solid var(--success); }
+.pace-check.done::after { content: ''; width: 5px; height: 9px; border: 2px solid var(--tinv); border-top: none; border-left: none; transform: rotate(40deg) translateY(-1px); display: block; }
+.pace-check.active { background: transparent; border: 2px solid var(--warning); }
+.pace-check.inactive { background: transparent; border: 1.5px solid var(--divider); }
+.pace-val { font-size: 13px; font-weight: 700; color: var(--t1); letter-spacing: -0.2px; }
+.pace-lbl { font-size: 10px; color: var(--t3); font-weight: 500; }
+.pace-step.active-step .pace-val { color: var(--warning); }
+.pace-connector { width: 16px; height: 1.5px; background: var(--divider); flex-shrink: 0; margin-bottom: 20px; }
+.pace-connector.done-line { background: var(--success); }
+
+/* Next workout */
+.next-card { background: var(--card); border-radius: var(--r-lg); border: 0.5px solid var(--divider); overflow: hidden; cursor: pointer; transition: opacity .15s; active-scale: 0.98; }
+.next-card:active { opacity: .82; }
+.next-card-inner { padding: var(--md); }
+.next-eyebrow { font-size: 11px; font-weight: 600; color: var(--t3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: var(--xs); }
+.next-day-name { font-size: 22px; font-weight: 800; color: var(--t1); letter-spacing: -0.3px; margin-bottom: var(--sm); }
+.next-pills { display: flex; gap: var(--xs); flex-wrap: wrap; margin-bottom: var(--sm); }
+.pill { display: inline-flex; align-items: center; padding: 5px 12px; border-radius: var(--pill); font-size: 12px; font-weight: 600; }
+.pill-type-k { background: rgba(245,185,66,0.15); color: var(--warning); }
+.pill-type-r { background: rgba(76,125,242,0.15); color: var(--blue); }
+.pill-type-c { background: rgba(111,227,106,0.15); color: var(--success); }
+.pill-type-x { background: var(--elevated); color: var(--t3); }
+.pill-week { background: var(--elevated); color: var(--t2); }
+.pill-fase { background: rgba(230,242,76,0.12); color: var(--accent); }
+.next-prog-bar { height: 3px; background: var(--divider); border-radius: 2px; overflow: hidden; }
+.next-prog-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .4s ease; }
+.next-card-footer { padding: 10px var(--md); background: var(--elevated); display: flex; align-items: center; justify-content: space-between; }
+.next-footer-label { font-size: 12px; color: var(--t3); font-weight: 500; }
+.next-footer-cta { font-size: 13px; font-weight: 600; color: var(--accent); }
+
+/* Phase summary */
+.fase-summary { display: flex; flex-direction: column; gap: var(--xs); }
+.fase-row { background: var(--card); border-radius: var(--r-lg); border: 0.5px solid var(--divider); padding: var(--md); cursor: pointer; transition: opacity .15s; }
+.fase-row:active { opacity: .8; }
+.fase-row-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--sm); }
+.fase-row-left { display: flex; flex-direction: column; gap: 3px; }
+.fase-row-name { font-size: 15px; font-weight: 700; color: var(--t1); }
+.fase-row-weeks { font-size: 12px; color: var(--t3); font-weight: 500; }
+.fase-row-goal { font-size: 13px; color: var(--t2); font-weight: 400; line-height: 1.4; margin-bottom: var(--sm); }
+.fase-bar-row { display: flex; align-items: center; gap: var(--sm); }
+.fase-bar { flex: 1; height: 5px; background: var(--divider); border-radius: 3px; overflow: hidden; }
+.fase-bar-fill { height: 100%; border-radius: 3px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+.fase-bar-fill.f1 { background: var(--accent); }
+.fase-bar-fill.f2 { background: var(--blue); }
+.fase-bar-fill.f3 { background: var(--warning); }
+.fase-pct { font-size: 13px; font-weight: 700; min-width: 34px; text-align: right; }
+.fase-pct.f1 { color: var(--accent); }
+.fase-pct.f2 { color: var(--blue); }
+.fase-pct.f3 { color: var(--warning); }
+.fase-badge { display: inline-flex; padding: 3px 10px; border-radius: var(--pill); font-size: 11px; font-weight: 700; }
+.fase-badge.active { background: rgba(230,242,76,0.15); color: var(--accent); }
+.fase-badge.inactive { background: var(--elevated); color: var(--t3); }
+.fase-row-chev { color: var(--t3); font-size: 18px; }
+
+/* ══════════════════════════
+   PLAN SCREEN  
+══════════════════════════ */
+.plan-scroll { padding: calc(var(--safe-top) + 20px) var(--md) var(--md); }
+.plan-title { font-size: 22px; font-weight: 700; margin-bottom: var(--md); }
+.plan-seg-wrap { margin-bottom: var(--md); }
+.seg { display: flex; background: var(--elevated); border-radius: var(--r-md); padding: 3px; gap: 2px; }
+.seg-btn { flex: 1; padding: 8px 4px; border: none; border-radius: 9px; background: transparent; font-family: var(--font); font-size: 12px; font-weight: 500; color: var(--t3); cursor: pointer; transition: all .2s; text-align: center; line-height: 1.2; }
+.seg-btn span { display: block; font-size: 10px; opacity: .7; margin-top: 1px; }
+.seg-btn.active { background: var(--card); color: var(--t1); font-weight: 700; box-shadow: 0 1px 4px rgba(0,0,0,.4); }
+.seg-btn:focus-visible { outline: 2px solid var(--accent); }
+
+.phase-panel { display: none; }
+.phase-panel.active { display: block; }
+.phase-desc-card { background: var(--card); border-radius: var(--r-lg); padding: var(--md); border: 0.5px solid var(--divider); margin-bottom: var(--sm); }
+.phase-desc-text { font-size: 13px; color: var(--t2); line-height: 1.5; }
+
+.week-list { display: flex; flex-direction: column; gap: var(--xs); }
+.wrow { background: var(--card); border-radius: var(--r-lg); border: 0.5px solid var(--divider); padding: var(--md) var(--md); display: flex; align-items: center; gap: var(--sm); cursor: pointer; transition: opacity .15s; }
+.wrow:active { opacity: .75; }
+.wrow.wdone { border-color: rgba(111,227,106,0.3); }
+.wbadge { width: 42px; height: 42px; border-radius: var(--r-md); background: var(--elevated); display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; }
+.wrow.wdone .wbadge { background: rgba(111,227,106,0.12); }
+.wbadge-n { font-size: 15px; font-weight: 800; line-height: 1; }
+.wrow.wdone .wbadge-n { color: var(--success); }
+.wbadge-l { font-size: 9px; font-weight: 600; color: var(--t3); text-transform: uppercase; letter-spacing: .3px; }
+.wrow-info { flex: 1; min-width: 0; }
+.wrow-title { font-size: 14px; font-weight: 600; color: var(--t1); }
+.wrow-meta { display: flex; gap: 6px; align-items: center; margin-top: 3px; flex-wrap: wrap; }
+.wtag { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: var(--pill); text-transform: uppercase; letter-spacing: .3px; }
+.tf1 { background: rgba(230,242,76,0.12); color: var(--accent); }
+.tf2 { background: rgba(76,125,242,0.12); color: var(--blue); }
+.tf3 { background: rgba(245,185,66,0.12); color: var(--warning); }
+.tdl { background: rgba(242,76,76,0.12); color: var(--error); }
+.wrow-prog { font-size: 11px; color: var(--t3); font-weight: 500; }
+.wrow-ring { position: relative; width: 34px; height: 34px; flex-shrink: 0; }
+.wrow-ring svg { transform: rotate(-90deg); }
+.wr-bg { fill: none; stroke: var(--divider); stroke-width: 4; }
+.wr-fill { fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 82; stroke-dashoffset: 82; transition: stroke-dashoffset .4s ease; }
+.wr-lbl { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: var(--t3); }
+.wrow-chev { color: var(--t3); font-size: 16px; }
+
+/* ══════════════════════════
+   FASE DETAIL SCREEN
+══════════════════════════ */
+.detail-scroll { padding: calc(var(--safe-top) + 16px) var(--md) var(--md); }
+.detail-back { display: flex; align-items: center; gap: 6px; background: none; border: none; color: var(--accent); font-family: var(--font); font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: var(--md); padding: 0; }
+.detail-title { font-size: 22px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 4px; }
+.detail-sub { font-size: 14px; color: var(--t2); margin-bottom: var(--lg); line-height: 1.4; }
+.detail-prog-card { background: var(--card); border-radius: var(--r-lg); padding: var(--md); border: 0.5px solid var(--divider); margin-bottom: var(--md); }
+.detail-prog-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--sm); }
+.detail-prog-name { font-size: 14px; font-weight: 700; }
+.detail-prog-pct { font-size: 14px; font-weight: 700; }
+.detail-prog-bar { height: 7px; background: var(--divider); border-radius: 4px; overflow: hidden; }
+.detail-prog-fill { height: 100%; border-radius: 4px; transition: width .6s cubic-bezier(.4,0,.2,1); }
+
+/* ══════════════════════════
+   BOTTOM SHEET
+══════════════════════════ */
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.72); z-index: 800; opacity: 0; pointer-events: none; transition: opacity .28s ease; }
+.overlay.show { opacity: 1; pointer-events: all; }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 900; background: var(--bg2); border-radius: 22px 22px 0 0; transform: translateY(100%); transition: transform .35s cubic-bezier(.4,0,.22,1); max-height: 92dvh; display: flex; flex-direction: column; }
+.sheet.show { transform: translateY(0); }
+.sheet-handle-wrap { padding: 12px 0 0; display: flex; justify-content: center; flex-shrink: 0; }
+.sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--elevated); }
+.sheet-hdr { padding: 12px var(--md) var(--md); flex-shrink: 0; }
+.sheet-eyebrow { font-size: 11px; font-weight: 600; color: var(--t3); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.sheet-title { font-size: 24px; font-weight: 800; letter-spacing: -0.4px; margin-bottom: var(--sm); }
+.sheet-pills { display: flex; gap: var(--xs); flex-wrap: wrap; }
+.sheet-sep { height: 0.5px; background: var(--divider); margin: 0 var(--md); flex-shrink: 0; }
+.sheet-body { overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; padding-bottom: calc(var(--safe-bot) + var(--md)); }
+
+/* Day sections */
+.sday { border-top: 0.5px solid var(--divider); }
+.sday:first-child { border-top: none; }
+.sday-hdr { display: flex; align-items: center; gap: var(--xs); padding: 12px var(--md) 6px; }
+.sday-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.sday-dot.k { background: var(--warning); }
+.sday-dot.r { background: var(--blue); }
+.sday-dot.c { background: var(--success); }
+.sday-dot.x { background: var(--t3); }
+.sday-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.sday-type { font-size: 11px; color: var(--t3); font-weight: 500; }
+
+/* Exercises */
+.ex-row { display: flex; align-items: flex-start; gap: var(--sm); padding: 11px var(--md); cursor: pointer; border-bottom: 0.5px solid var(--divider); transition: background .1s; }
+.ex-row:last-child { border-bottom: none; }
+.ex-row:active { background: rgba(255,255,255,.04); }
+.ex-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.ex-chk { width: 24px; height: 24px; border-radius: 7px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 1px; background: transparent; border: 1.5px solid var(--divider); transition: all .2s cubic-bezier(.34,1.56,.64,1); }
+.ex-row.checked .ex-chk { background: var(--success); border-color: var(--success); }
+.ex-chk-icon { display: none; color: var(--tinv); font-size: 13px; font-weight: 800; line-height: 1; }
+.ex-row.checked .ex-chk-icon { display: block; }
+.ex-content { flex: 1; min-width: 0; }
+.ex-name { font-size: 15px; font-weight: 500; color: var(--t1); line-height: 1.3; }
+.ex-row.checked .ex-name { color: var(--t3); text-decoration: line-through; text-decoration-color: var(--t3); }
+.ex-sets { font-size: 13px; color: var(--t2); margin-top: 2px; font-weight: 400; }
+.ex-note { display: inline-flex; font-size: 11px; color: var(--success); background: rgba(111,227,106,.12); padding: 3px 8px; border-radius: 6px; margin-top: 5px; font-weight: 600; }
+.wt-row { display: flex; align-items: center; gap: var(--xs); padding: 5px 0 2px; }
+.wt-input { width: 110px; padding: 7px 10px; border-radius: var(--r-sm); border: 1px solid var(--divider); background: var(--elevated); color: var(--t1); font-family: var(--font); font-size: 14px; font-weight: 600; outline: none; transition: border-color .15s; -webkit-appearance: none; }
+.wt-input:focus { border-color: var(--accent); }
+.wt-input::placeholder { color: var(--t3); }
+.wt-saved { font-size: 11px; color: var(--success); font-weight: 600; opacity: 0; transition: opacity .3s; }
+.wt-saved.show { opacity: 1; }
+
+/* Sheet footer */
+.sheet-footer { flex-shrink: 0; padding: var(--sm) var(--md) calc(var(--safe-bot) + var(--sm)); border-top: 0.5px solid var(--divider); display: flex; gap: var(--sm); align-items: center; background: var(--bg2); }
+.sheet-prog-wrap { flex: 1; }
+.sheet-prog-lbl { font-size: 11px; color: var(--t3); margin-bottom: 5px; font-weight: 500; }
+.sheet-prog-bar { height: 4px; background: var(--divider); border-radius: 2px; overflow: hidden; }
+.sheet-prog-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width .4s ease; }
+.btn-markall { padding: 10px 18px; border-radius: var(--pill); border: none; background: rgba(230,242,76,.12); color: var(--accent); font-family: var(--font); font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: opacity .15s; }
+.btn-markall:active { opacity: .7; }
+.btn-markall:focus-visible { outline: 2px solid var(--accent); }
+.btn-uncheck { width: 38px; height: 38px; border-radius: var(--r-sm); border: 1px solid var(--divider); background: var(--elevated); color: var(--t3); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all .15s; font-family: var(--font); }
+.btn-uncheck:active { background: var(--red-bg, rgba(242,76,76,.12)); color: var(--error); border-color: var(--error); }
+.btn-next-workout { padding: 10px 14px; border-radius: var(--pill); border: 1px solid var(--divider); background: var(--elevated); color: var(--t2); font-family: var(--font); font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all .15s; flex-shrink: 0; }
+.btn-next-workout:active { background: rgba(230,242,76,.12); color: var(--accent); border-color: var(--accent); }
+.btn-next-workout:disabled { opacity: .3; pointer-events: none; }
+
+/* ── TOAST ── */
+.toast { position: fixed; bottom: calc(var(--tab-h) + var(--safe-bot) + 16px); left: 50%; transform: translateX(-50%) translateY(12px); background: var(--elevated); border: 0.5px solid var(--divider); color: var(--t1); padding: 11px 18px; border-radius: 14px; font-size: 14px; font-weight: 600; white-space: nowrap; opacity: 0; transition: all .3s cubic-bezier(.34,1.56,.64,1); pointer-events: none; z-index: 999; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.stat-card-roadmap { overflow: hidden; }
+.roadmap-steps-inline { display: flex; flex-direction: row; align-items: center; gap: 3px; margin-top: 6px; overflow-x: auto; scrollbar-width: none; }
+.roadmap-steps-inline::-webkit-scrollbar { display: none; }
+.roadmap-step-inline { display: flex; flex-direction: column; align-items: center; gap: 3px; flex-shrink: 0; }
+.pace-connector-sm { width: 8px; height: 1.5px; background: var(--divider); flex-shrink: 0; margin-bottom: 14px; }
+.pace-connector-sm.done { background: var(--success); }
+.pace-check-sm { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.pace-check-sm.done { background: var(--success); }
+.pace-check-sm.active { background: var(--warning); }
+.pace-check-sm.inactive { background: var(--divider); }
+.pace-val-sm { font-size: 10px; font-weight: 700; color: var(--t1); }
+.pace-val-sm.active { color: var(--warning); }
+.pace-lbl-sm { font-size: 9px; color: var(--t3); font-weight: 500; white-space: nowrap; }
+
+/* ── CALENDAR STEPPER ── */
+.cal-wrap{background:var(--card);border-radius:var(--r-lg);border:0.5px solid var(--divider);padding:var(--md);}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--md);}
+.cal-week-label{font-size:13px;font-weight:700;color:var(--t1);}
+.cal-nav{display:flex;gap:var(--xs);}
+.cal-nav-btn{width:30px;height:30px;border-radius:var(--r-sm);border:1px solid var(--divider);background:var(--elevated);color:var(--t2);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;line-height:1;font-family:var(--font);}
+.cal-nav-btn:active{background:var(--accent);color:var(--tinv);border-color:var(--accent);}
+.cal-nav-btn:disabled{opacity:.3;pointer-events:none;}
+.cal-days{display:flex;gap:6px;}
+.cal-day{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 2px;border-radius:var(--r-md);border:1px solid transparent;cursor:pointer;transition:all .2s cubic-bezier(.4,0,.2,1);}
+.cal-day:active{transform:scale(.95);}
+.cal-day.state-active{background:var(--accent);border-color:var(--accent);}
+.cal-day.state-done{background:rgba(111,227,106,.1);border-color:rgba(111,227,106,.25);}
+.cal-day.state-next{border-color:var(--divider);background:var(--elevated);}
+.cal-day-abbr{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;}
+.cal-day.state-active .cal-day-abbr{color:var(--tinv);}
+.cal-day.state-done .cal-day-abbr{color:var(--success);}
+.cal-day.state-next .cal-day-abbr{color:var(--t3);}
+.cal-day-icon{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;}
+.cal-day.state-active .cal-day-icon{background:rgba(0,0,0,.18);color:var(--tinv);}
+.cal-day.state-done .cal-day-icon{background:rgba(111,227,106,.15);color:var(--success);}
+.cal-day.state-next .cal-day-icon{background:var(--card);color:var(--t2);}
+.cal-day-dot{width:5px;height:5px;border-radius:50%;margin-top:1px;}
+.cal-day.state-active .cal-day-dot{background:rgba(0,0,0,.35);}
+.cal-day.state-done .cal-day-dot{background:var(--success);}
+.cal-day.state-next .cal-day-dot{background:var(--divider);}
+
+/* ── COMBINED CARD ── */
+.combined-card{background:var(--card);border-radius:var(--r-lg);border:0.5px solid var(--divider);overflow:hidden;}
+.combined-header{display:flex;align-items:center;justify-content:space-between;padding:var(--md) var(--md) var(--sm);}
+.combined-card .cal-days{padding:0 var(--md) var(--md);}
+.combined-sep{height:0.5px;background:var(--divider);}
+.combined-workout{display:flex;align-items:center;justify-content:space-between;gap:var(--md);padding:var(--md);cursor:pointer;transition:background .15s;}
+.combined-workout:active{background:rgba(255,255,255,.04);}
+.cw-left{flex:1;min-width:0;}
+.cw-eyebrow{font-size:11px;font-weight:600;color:var(--t3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px;}
+.cw-day{font-size:20px;font-weight:800;letter-spacing:-0.3px;margin-bottom:var(--xs);}
+.cw-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.cw-right{display:flex;align-items:center;gap:var(--xs);flex-shrink:0;}
+.cw-prog-ring{position:relative;width:44px;height:44px;}
+.cw-prog-ring svg{transform:rotate(-90deg);}
+.cw-ring-bg{fill:none;stroke:var(--divider);stroke-width:5;}
+.cw-ring-fill{fill:none;stroke:var(--accent);stroke-width:5;stroke-linecap:round;stroke-dasharray:107;stroke-dashoffset:107;transition:stroke-dashoffset .5s cubic-bezier(.4,0,.2,1);}
+.cw-ring-txt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--accent);}
+.cw-arrow{font-size:22px;color:var(--t3);}
+.cw-done .cw-ring-fill{stroke:var(--success);}
+.cw-done .cw-ring-txt{color:var(--success);}
+</style>
+</head>
+<body>
+
+<!-- HOME SCREEN -->
+<div class="screen active" id="screen-home">
+  <div class="home-scroll">
+    <h1 class="page-title">Hyrox Training Plan Heleen</h1>
+
+    <!-- Combined calendar + workout card -->
+    <div>
+      <div class="section-label" style="margin-bottom:var(--sm)">Deze week</div>
+      <div class="combined-card">
+        <div class="combined-header">
+          <div class="cal-week-label" id="calWeekLabel">Week —</div>
+          <div class="cal-nav">
+            <button class="cal-nav-btn" id="calPrev" onclick="calNav(-1)" aria-label="Vorige week">&#8249;</button>
+            <button class="cal-nav-btn" id="calNext" onclick="calNav(1)" aria-label="Volgende week">&#8250;</button>
+          </div>
+        </div>
+        <div class="cal-days" id="calDays"></div>
+        <div class="combined-sep"></div>
+        <div class="combined-workout" id="combinedWorkout" role="button" tabindex="0"
+          aria-label="Open geselecteerde workout"
+          onclick="openSelectedWorkout()"
+          onkeydown="if(event.key='Enter'||event.key===' '){openSelectedWorkout();event.preventDefault();}">
+          <div class="cw-left">
+            <div class="cw-eyebrow" id="cwEyebrow">Volgende workout</div>
+            <div class="cw-day" id="cwDay">—</div>
+            <div class="cw-pills" id="cwPills"></div>
+          </div>
+          <div class="cw-right">
+            <div class="cw-prog-ring">
+              <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+                <circle class="cw-ring-bg" cx="22" cy="22" r="17"/>
+                <circle class="cw-ring-fill" id="cwRingFill" cx="22" cy="22" r="17"/>
+              </svg>
+              <div class="cw-ring-txt" id="cwRingTxt">0%</div>
+            </div>
+            <div class="cw-arrow">›</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats row with pace roadmap -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Voortgang fase</div>
+        <div class="fase-stepper">
+          <button class="fase-chev" id="fasePrev" onclick="faseNav(-1)" aria-label="Vorige fase">&#8249;</button>
+          <div class="fase-stepper-body" id="faseStepperBody"></div>
+          <button class="fase-chev" id="faseNext" onclick="faseNav(1)" aria-label="Volgende fase">&#8250;</button>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Actieve fase</div>
+        <div class="stat-fase-name" id="homeActiveFase">—</div>
+        <div class="stat-sub" id="homeActiveWeek">Week —</div>
+      </div>
+      <div class="stat-card stat-card-roadmap">
+        <div class="stat-label">Pace doel</div>
+        <div class="roadmap-steps-inline" id="roadmapSteps"></div>
+      </div>
+    </div>
+
+    <!-- Fase summary -->
+    <div>
+      <div class="section-label" style="margin-bottom:var(--sm)">Fase overzicht</div>
+      <div class="fase-summary" id="faseSummary"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PLAN SCREEN -->
+<div class="screen" id="screen-plan">
+  <div class="plan-scroll">
+    <h1 class="plan-title">Trainingsplan</h1>
+    <div class="plan-seg-wrap">
+      <div class="seg" role="tablist">
+        <button class="seg-btn active" role="tab" aria-selected="true" onclick="switchPhase('fase1',this)">Fase 1<span>Wk 1-8</span></button>
+        <button class="seg-btn" role="tab" aria-selected="false" onclick="switchPhase('fase2',this)">Fase 2<span>Wk 9-18</span></button>
+        <button class="seg-btn" role="tab" aria-selected="false" onclick="switchPhase('fase3',this)">Fase 3<span>Wk 19-24</span></button>
+      </div>
+    </div>
+    <div class="phase-panel active" id="pp-fase1">
+      <div class="phase-desc-card"><p class="phase-desc-text">Aerobe basis, kracht fundament, groin herstellen. Donderdag extra easy run. Deload op week 4 en 8.</p></div>
+      <div class="week-list" id="wl-fase1"></div>
+    </div>
+    <div class="phase-panel" id="pp-fase2">
+      <div class="phase-desc-card"><p class="phase-desc-text">Race simulaties, lunge volume opbouwen, threshold runs langer. Donderdag strides voor snelheid. T-pace doel: 5:00/km.</p></div>
+      <div class="week-list" id="wl-fase2"></div>
+    </div>
+    <div class="phase-panel" id="pp-fase3">
+      <div class="phase-desc-card"><p class="phase-desc-text">Volledige race simulaties, snelheidswerk, taper. Donderdag herstelrun. Race dag staat voor de deur.</p></div>
+      <div class="week-list" id="wl-fase3"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FASE DETAIL SCREEN -->
+<div class="screen" id="screen-detail">
+  <div class="detail-scroll" id="detailContent"></div>
+</div>
+
+<!-- TAB BAR -->
+<nav class="tabbar" role="navigation" aria-label="Navigatie">
+  <button class="tab-btn active" id="tab-home" onclick="goTab('home')" aria-label="Home">
+    <div class="tab-icon">&#9671;</div>
+    <div class="tab-label">Home</div>
+  </button>
+  <button class="tab-btn" id="tab-plan" onclick="goTab('plan')" aria-label="Plan">
+    <div class="tab-icon">&#9776;</div>
+    <div class="tab-label">Plan</div>
+  </button>
+</nav>
+
+<!-- BOTTOM SHEET -->
+<div class="overlay" id="overlay" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Workout">
+  <div class="sheet-handle-wrap"><div class="sheet-handle"></div></div>
+  <div class="sheet-hdr">
+    <div class="sheet-eyebrow" id="sheetEyebrow">—</div>
+    <div class="sheet-title" id="sheetTitle">—</div>
+    <div class="sheet-pills" id="sheetPills"></div>
+  </div>
+  <div class="sheet-sep"></div>
+  <div class="sheet-body" id="sheetBody"></div>
+  <div class="sheet-footer">
+    <div class="sheet-prog-wrap">
+      <div class="sheet-prog-lbl" id="sheetProgLbl">0 / 0 voltooid</div>
+      <div class="sheet-prog-bar"><div class="sheet-prog-fill" id="sheetProgFill" style="width:0%"></div></div>
+    </div>
+    <button class="btn-uncheck" style="display:none" id="btnUncheck" aria-label="Dag ontvinken" onclick="uncheckDay()" title="Ontvinken">&#8635;</button>
+    <button class="btn-markall" id="btnMarkAll" aria-label="Alle oefeningen afvinken">Alles afvinken</button>
+    <button class="btn-next-workout" id="btnNextWorkout" onclick="goNextWorkout()" aria-label="Volgende workout">Volgende ›</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<script>
+// ── PLAN DATA ──
+const PLAN=[
+  {w:1,f:'fase1',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Warming-up mobiliteit heup',s:'10 min',note:'Fysio iliopsoas stretches — altijd eerst',wt:false},
+      {n:'Barbell Back Squat',s:'4x6',note:'',wt:true},
+      {n:'Romanian Deadlift',s:'3x8',note:'Controle neergaande fase',wt:true},
+      {n:'Bulgarian Split Squat',s:'3x8 lichaamsgewicht',note:'Lunge vervanger fase 1',wt:true},
+      {n:'Hip Thrust (barbell)',s:'3x12',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'3x12',note:'Altijd als laatste',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[
+      {n:'Inlopen easy',s:'10-15 min',note:'Neus-ademhaling Z2',wt:false},
+      {n:'Tempo run 3x8 min',s:'@ 5:25/km',note:'2 min herstel',wt:false},
+      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
+    ]},
+    {day:'Donderdag',type:'r',ex:[
+      {n:'Easy run',s:'30 min',note:'Neus-ademhaling. Extra volume. Geen intensiteit.',wt:false},
+    ]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Warming-up roeien easy',s:'5 min',note:'',wt:false},
+      {n:'Deadlift',s:'4x5',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'Sled pull specifiek',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12 per arm',note:'',wt:true},
+      {n:'Bench Press',s:'3x10',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'3x3 min @ Z3',note:'1:30 herstel',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[
+      {n:'Long run easy',s:'60 min',note:'Neus-ademhaling ~7:15/km',wt:false},
+    ]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Warming-up',s:'8 min easy',note:'',wt:false},
+      {n:'Sled Pull',s:'4x25m licht gewicht',note:'Techniek eerst',wt:true},
+      {n:'Burpee Broad Jump',s:'4x20m',note:'',wt:false},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Wall Balls — Altijd laatste',s:'3x15',note:'Niet stoppen',wt:true},
+    ]},
+  ]},
+  {w:2,f:'fase1',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Warming-up mobiliteit heup',s:'10 min',note:'',wt:false},
+      {n:'Barbell Back Squat',s:'4x6',note:'Zelfde gewicht week 1',wt:true},
+      {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
+      {n:'Bulgarian Split Squat',s:'3x8 BW',note:'',wt:true},
+      {n:'Hip Thrust',s:'3x12',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'3x12',note:'Altijd als laatste',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[
+      {n:'Inlopen easy',s:'10 min',note:'',wt:false},
+      {n:'Tempo run 3x8 min',s:'@ 5:25/km',note:'90 sec herstel',wt:false},
+      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
+    ]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'30 min',note:'Neus-ademhaling. Herstel van woensdag.',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x5',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x10',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'3x3 min',note:'1:30 herstel',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'60 min',note:'Neus-ademhaling',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Sled Pull',s:'4x25m',note:'',wt:true},
+      {n:'Burpee Broad Jump',s:'4x20m',note:'',wt:false},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Wall Balls — Altijd laatste',s:'3x15',note:'',wt:true},
+    ]},
+  ]},
+  {w:3,f:'fase1',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x6 (+2.5kg)',note:'Eerste gewichtsophoging',wt:true},
+      {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
+      {n:'Bulgarian Split Squat',s:'3x8 BW',note:'',wt:true},
+      {n:'Hip Thrust',s:'3x12',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'3x14',note:'+2 reps',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[
+      {n:'Inlopen easy',s:'10 min',note:'',wt:false},
+      {n:'VO2max: 6x800m',s:'@ 5:00/km',note:'2 min herstel — elke 3e week',wt:false},
+      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
+    ]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'35 min',note:'Na VO2max dag — rustig blijven.',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x5 (+2.5kg)',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x10',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'3x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'62 min',note:'Neus-ademhaling',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Sled Pull',s:'4x25m (+gewicht)',note:'',wt:true},
+      {n:'Burpee Broad Jump',s:'4x20m',note:'',wt:false},
+      {n:'Farmers Carry',s:'3x50m',note:'',wt:true},
+      {n:'Wall Balls — Altijd laatste',s:'3x15',note:'',wt:true},
+    ]},
+  ]},
+  {w:4,f:'fase1',d:true,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'DELOAD — Squat',s:'3x6 @ 80%',note:'Lichter gewicht',wt:true},
+      {n:'DELOAD — RDL',s:'2x8',note:'',wt:true},
+      {n:'DELOAD — Split Squat',s:'2x8',note:'',wt:true},
+      {n:'Wall Balls',s:'2x12',note:'Licht',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Easy run',s:'20 min',note:'Neus-ademhaling. Geen tempo.',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Rust of wandeling',s:'20-30 min',note:'Deload week — optioneel',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'DELOAD — Deadlift',s:'3x5 @ 80%',note:'',wt:true},
+      {n:'DELOAD — Row',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg easy',s:'2x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Easy run',s:'55 min',note:'Herstelweek',wt:false}]},
+    {day:'Zondag',type:'c',ex:[{n:'Licht conditioning circuit',s:'30 min',note:'Geen max',wt:false}]},
+  ]},
+  {w:5,f:'fase1',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x5 (zwaarder)',note:'Rep verlaging = intensiteit omhoog',wt:true},
+      {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
+      {n:'Bulgarian Split Squat',s:'3x8 licht gewicht',note:'Eerste keer met gewicht',wt:true},
+      {n:'Hip Thrust',s:'3x12',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'3x16',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[
+      {n:'Inlopen easy',s:'10 min',note:'',wt:false},
+      {n:'Tempo run 2x15 min',s:'@ 5:20/km',note:'2 min herstel',wt:false},
+      {n:'Uitlopen easy',s:'10 min',note:'',wt:false},
+    ]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'35 min',note:'Neus-ademhaling. Volume dag.',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x4',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8 (+gewicht)',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'+1 set',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'65 min',note:'Neus-ademhaling',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Sled Pull',s:'4x25m',note:'',wt:true},
+      {n:'Burpee Broad Jump',s:'4x25m',note:'+5m',wt:false},
+      {n:'Farmers Carry',s:'4x50m',note:'+1 set',wt:true},
+      {n:'Wall Balls — Altijd laatste',s:'4x16',note:'',wt:true},
+    ]},
+  ]},
+  {w:6,f:'fase1',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x5',note:'',wt:true},
+      {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
+      {n:'Bulgarian Split Squat',s:'3x8 (+gewicht)',note:'',wt:true},
+      {n:'Hip Thrust',s:'3x12',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'3x18',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Tempo run 2x15 min',s:'@ 5:20/km',note:'90 sec herstel',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'35 min',note:'Neus-ademhaling.',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x4',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'65 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Sled Pull',s:'4x25m (+gewicht)',note:'',wt:true},
+      {n:'Burpee Broad Jump',s:'4x25m',note:'',wt:false},
+      {n:'Farmers Carry',s:'4x50m',note:'',wt:true},
+      {n:'Wall Balls — Altijd laatste',s:'4x18',note:'',wt:true},
+    ]},
+  ]},
+  {w:7,f:'fase1',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x5 (+2.5kg)',note:'',wt:true},
+      {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
+      {n:'Bulgarian Split Squat',s:'3x10',note:'+2 reps',wt:true},
+      {n:'Hip Thrust',s:'4x10',note:'+1 set',wt:true},
+      {n:'Wall Balls — Finisher',s:'4x18',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'VO2max: 7x800m',s:'@ 4:55/km',note:'2 min herstel',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'40 min',note:'Neus-ademhaling. Opbouw naar 40 min.',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x4 (+2.5kg)',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'70 min',note:'Neus-ademhaling',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Sled Pull',s:'4x25m',note:'',wt:true},
+      {n:'Burpee Broad Jump',s:'4x25m',note:'',wt:false},
+      {n:'Farmers Carry',s:'4x50m (+gewicht)',note:'',wt:true},
+      {n:'Wall Balls — Altijd laatste',s:'4x18',note:'',wt:true},
+    ]},
+  ]},
+  {w:8,f:'fase1',d:true,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'DELOAD — Squat',s:'3x5 @ 80%',note:'',wt:true},
+      {n:'DELOAD — RDL',s:'2x8',note:'',wt:true},
+      {n:'DELOAD — Split Squat',s:'2x8',note:'',wt:true},
+      {n:'Wall Balls',s:'2x15',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Easy run',s:'25 min',note:'Neus-ademhaling',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Rust of wandeling',s:'20 min',note:'Deload week',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'DELOAD — Deadlift',s:'3x4 @ 80%',note:'',wt:true},
+      {n:'DELOAD — Row',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg easy',s:'2x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Easy run',s:'55 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[{n:'Licht conditioning circuit',s:'30 min',note:'Fase 2 staat voor de deur',wt:false}]},
+  ]},
+  {w:9,f:'fase2',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x5',note:'',wt:true},
+      {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
+      {n:'Bulgarian Split Squat',s:'3x10',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'2x20m lichaamsgewicht',note:'INTRODUCTIE — stop bij groin pijn',wt:true},
+      {n:'Hip Thrust',s:'4x10',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'4x18',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Tempo run aaneengesloten',s:'30 min @ 5:15/km',note:'Sneller dan fase 1',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'35 min',note:'Laatste 10 min: 6x20 sec acceleraties naar 4:30/km pace. 40 sec wandelen ertussen.',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x4',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'70 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Sled Pull',s:'4x25m',note:'',wt:true},
+      {n:'Burpee Broad Jump',s:'4x25m',note:'',wt:false},
+      {n:'Roeien',s:'4x250m',note:'Nieuw station',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'4x20',note:'',wt:true},
+    ]},
+  ]},
+  {w:10,f:'fase2',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x5 (+2.5kg)',note:'',wt:true},
+      {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'2x20m BW',note:'Groin check',wt:true},
+      {n:'Hip Thrust',s:'4x10',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'4x20',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Tempo run',s:'30 min @ 5:15/km',note:'',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'35 min',note:'6x20 sec strides aan het einde',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x4',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8 (+gewicht)',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'70 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Sled Pull',s:'4x25m',note:'',wt:true},
+      {n:'Roeien',s:'4x250m',note:'',wt:false},
+      {n:'Sandbag Lunge',s:'2x20m',note:'',wt:true},
+      {n:'Wall Balls — Altijd laatste',s:'4x20',note:'',wt:true},
+    ]},
+  ]},
+  {w:11,f:'fase2',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x5',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'3x20m licht',note:'+1 set',wt:true},
+      {n:'Hip Thrust',s:'4x10',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'4x20',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'VO2max: 8x800m',s:'@ 4:50/km',note:'2 min herstel',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'40 min',note:'Na VO2max dag — rustig blijven. Neus-ademhaling.',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x4',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'72 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Sled Pull',s:'4x25m',note:'',wt:true},
+      {n:'Burpee Broad Jump',s:'4x25m',note:'',wt:false},
+      {n:'Roeien',s:'4x250m',note:'',wt:false},
+      {n:'Sandbag Lunge',s:'3x20m',note:'',wt:true},
+      {n:'Wall Balls — Altijd laatste',s:'4x20',note:'',wt:true},
+    ]},
+  ]},
+  {w:12,f:'fase2',d:true,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'DELOAD — Squat',s:'3x5 @ 80%',note:'',wt:true},
+      {n:'Lunge easy',s:'2x15m BW',note:'',wt:false},
+      {n:'Wall Balls',s:'2x15',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Easy run',s:'25 min',note:'',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Rust of wandeling',s:'20 min',note:'Deload',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'DELOAD — Deadlift',s:'3x4 @ 80%',note:'',wt:true},
+      {n:'DELOAD — Row',s:'3x8',note:'',wt:true},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Easy run',s:'60 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[{n:'Licht conditioning circuit',s:'35 min',note:'Geen max',wt:false}]},
+  ]},
+  {w:13,f:'fase2',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x4 (zwaarder)',note:'',wt:true},
+      {n:'Romanian Deadlift',s:'3x8',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'3x30m',note:'Eerste keer 30m — groin check',wt:true},
+      {n:'Hip Thrust',s:'4x10',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'4x20',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Tempo run aaneengesloten',s:'35 min @ 5:10/km',note:'Nieuwe T-pace target',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'40 min',note:'8x20 sec strides aan het einde @ 4:40/km',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x3',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'75 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Race simulatie: 2 ronden',s:'1km @ 5:30 + sled pull + burpee BJ',note:'Eerste race simulatie',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'4x20',note:'',wt:true},
+    ]},
+  ]},
+  {w:14,f:'fase2',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x4',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'3x30m (+gewicht)',note:'',wt:true},
+      {n:'Hip Thrust',s:'4x10',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'4x22',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Tempo run',s:'35 min @ 5:10/km',note:'',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'40 min',note:'8x20 sec strides @ 4:40/km',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x3',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'75 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Race simulatie: 3 ronden',s:'1km @ 5:30 + sled pull + roeien',note:'',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'4x22',note:'',wt:true},
+    ]},
+  ]},
+  {w:15,f:'fase2',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x4 (+2.5kg)',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'4x30m',note:'+1 set',wt:true},
+      {n:'Hip Thrust',s:'4x10',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'1x max reps',note:'Eerste max set',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'VO2max: 8x800m',s:'@ 4:45/km',note:'2 min herstel',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run',s:'40 min',note:'Na VO2max — neus-ademhaling, geen druk',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x3',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'78 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Race simulatie: 3 ronden',s:'1km @ 5:25 + burpee BJ + lunge',note:'Lunge in circuit',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
+    ]},
+  ]},
+  {w:16,f:'fase2',d:true,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'DELOAD — Squat',s:'3x4 @ 80%',note:'',wt:true},
+      {n:'Lunge easy',s:'2x20m',note:'',wt:true},
+      {n:'Wall Balls',s:'3x20',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Easy run',s:'25 min',note:'',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Rust of wandeling',s:'20 min',note:'Deload',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'DELOAD — Deadlift',s:'3x3 @ 80%',note:'',wt:true},
+      {n:'DELOAD — Row',s:'3x8',note:'',wt:true},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Easy run',s:'60 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[{n:'Licht conditioning circuit',s:'30 min',note:'',wt:false}]},
+  ]},
+  {w:17,f:'fase2',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x4',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'4x40m',note:'Eerste keer 40m',wt:true},
+      {n:'Hip Thrust',s:'4x10',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'4x22',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Tempo 2x20 min',s:'@ 5:05/km',note:'2 min herstel',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'40 min',note:'8x20 sec strides @ 4:35/km — pace bouwt op',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x3',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'80 min',note:'Langste run tot nu toe',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Race simulatie: 4 ronden',s:'1km @ 5:25 + wisselende stations',note:'',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
+    ]},
+  ]},
+  {w:18,f:'fase2',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x4',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'4x40m',note:'',wt:true},
+      {n:'Hip Thrust',s:'4x10',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'1x max',note:'Meer dan week 15?',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Tempo 2x20 min',s:'@ 5:05/km',note:'',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Easy run met strides',s:'40 min',note:'8x20 sec strides @ 4:35/km',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x3',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x8',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x12',note:'',wt:true},
+      {n:'Bench Press',s:'3x8',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'80 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Volledige race simulatie',s:'4 ronden: 1km @ 5:25 + alle stations doubles',note:'Grote test fase 2',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
+    ]},
+  ]},
+  {w:19,f:'fase3',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x3 (max gewicht)',note:'Kracht piek',wt:true},
+      {n:'Romanian Deadlift',s:'3x6',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'4x40m',note:'',wt:true},
+      {n:'Hip Thrust',s:'4x8',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'1x max',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Tempo 2x22 min',s:'@ 5:00/km',note:'Nieuwe T-pace target',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Herstelrun',s:'30 min easy',note:'Na tempo dag. Neus-ademhaling. Geen druk.',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x3',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x6',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x10',note:'',wt:true},
+      {n:'Bench Press',s:'3x6',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'80 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Race simulatie: 6 ronden',s:'1km @ 5:20 + alle stations doubles',note:'',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
+    ]},
+  ]},
+  {w:20,f:'fase3',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x3',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'4x40m',note:'',wt:true},
+      {n:'Hip Thrust',s:'4x8',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'1x max',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Tempo 2x22 min',s:'@ 5:00/km',note:'',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Herstelrun',s:'30 min easy',note:'Neus-ademhaling',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x3',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x6',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x10',note:'',wt:true},
+      {n:'Bench Press',s:'3x6',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'80 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Race simulatie: 7 ronden',s:'1km @ 5:20 + alle stations doubles',note:'',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
+    ]},
+  ]},
+  {w:21,f:'fase3',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'4x3',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'4x40m',note:'',wt:true},
+      {n:'Wall Balls — Finisher',s:'1x max',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'VO2max: 8x800m',s:'@ 4:40/km',note:'Snelste interval tot nu toe',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Herstelrun',s:'30 min easy',note:'Na VO2max. Neus-ademhaling.',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'4x3',note:'',wt:true},
+      {n:'Pendlay Row',s:'4x6',note:'',wt:true},
+      {n:'Dumbbell Single Arm Row',s:'3x10',note:'',wt:true},
+      {n:'Bench Press',s:'3x6',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'4x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Long run easy',s:'80 min',note:'',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Volledige race simulatie: 8 ronden',s:'1km @ 5:20 + alle stations doubles',note:'Grootste test voor race dag',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
+    ]},
+  ]},
+  {w:22,f:'fase3',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'3x3',note:'Volume daalt',wt:true},
+      {n:'Sandbag Lunge',s:'3x30m',note:'Volume terug',wt:true},
+      {n:'Wall Balls',s:'3x20',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Interval: 6x1km',s:'@ 4:50/km',note:'Race pace sharpening',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Herstelrun',s:'25 min easy',note:'Neus-ademhaling',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift',s:'3x3',note:'',wt:true},
+      {n:'Pendlay Row',s:'3x6',note:'',wt:true},
+      {n:'Ski Erg Interval',s:'3x3 min',note:'',wt:false},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Easy run',s:'70 min',note:'Vers blijven',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Race simulatie: 6 ronden',s:'1km @ 5:15 + alle stations',note:'Sub 1:20 pace testen',wt:false},
+      {n:'Wall Balls — Altijd laatste',s:'1x max',note:'',wt:true},
+    ]},
+  ]},
+  {w:23,f:'fase3',d:false,days:[
+    {day:'Maandag',type:'k',ex:[
+      {n:'Barbell Back Squat',s:'3x3',note:'',wt:true},
+      {n:'Sandbag Lunge',s:'2x20m',note:'Benen fris',wt:true},
+      {n:'Wall Balls',s:'2x15',note:'',wt:true},
+    ]},
+    {day:'Woensdag',type:'r',ex:[{n:'Interval: 4x1km',s:'@ 4:50/km',note:'Minder volume, zelfde intensiteit',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Herstelrun',s:'20 min easy',note:'Taper begint',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[
+      {n:'Deadlift easy',s:'2x3 @ 80%',note:'',wt:true},
+      {n:'Row',s:'2x6',note:'',wt:true},
+    ]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Easy run',s:'60 min',note:'Taper',wt:false}]},
+    {day:'Zondag',type:'c',ex:[
+      {n:'Race simulatie: 4 ronden licht',s:'1km @ 5:30 + stations',note:'Niet uitputten',wt:false},
+      {n:'Wall Balls licht',s:'2x15',note:'',wt:true},
+    ]},
+  ]},
+  {w:24,f:'fase3',d:true,days:[
+    {day:'Maandag',type:'k',ex:[{n:'Mobiliteit en fysio stretches',s:'20 min',note:'Geen zware lifts',wt:false}]},
+    {day:'Woensdag',type:'r',ex:[{n:'Easy run',s:'20 min',note:'Benen losmaken',wt:false}]},
+    {day:'Donderdag',type:'r',ex:[{n:'Rust',s:'—',note:'Taper week. Niks.',wt:false}]},
+    {day:'Vrijdag',type:'k',ex:[{n:'Lichte mobiliteit',s:'15 min',note:'',wt:false}]},
+    {day:'Zaterdag',type:'r',ex:[{n:'Easy run',s:'30 min',note:'Laatste run voor race dag',wt:false}]},
+    {day:'Zondag',type:'x',ex:[{n:'Rust — race dag morgen',s:'—',note:'Vertrouw op je werk. Je bent klaar.',wt:false}]},
+  ]},
+];
+
+// ── PACE ROADMAP DATA ──
+const PACES=[
+  {val:'5:30',lbl:'Nu',state:'done'},
+  {val:'5:15',lbl:'Fase 1',state:'active'},
+  {val:'5:00',lbl:'Fase 2',state:'inactive'},
+  {val:'4:45',lbl:'Post race',state:'inactive'},
+  {val:'4:20',lbl:'Mnd 10',state:'inactive'},
+  {val:'4:10',lbl:'Doel',state:'inactive'},
+];
+
+// ── FASE META ──
+const FASE_META={
+  fase1:{name:'Fase 1 — Fundament',weeks:'Week 1–8 · 8 weken',goal:'Aerobe basis opbouwen, kracht fundament leggen, groin herstellen. Geen zware lunges. Donderdag extra easy run voor runvolume.',colorCls:'f1'},
+  fase2:{name:'Fase 2 — Opbouw',weeks:'Week 9–18 · 10 weken',goal:'Race simulaties introduceren, lunge volume opbouwen, threshold runs langer maken. Donderdag strides voor snelheid. T-pace doel: 5:00/km.',colorCls:'f2'},
+  fase3:{name:'Fase 3 — Race Specifiek',weeks:'Week 19–24 · 6 weken',goal:'Volledige race simulaties op race intensiteit. Snelheidswerk, taper. Kwaliteit boven kwantiteit. Race dag staat voor de deur.',colorCls:'f3'},
+};
+
+// ── STORAGE ──
+const SKEY='hyrox_v7';
+let S={};
+function load(){try{S=JSON.parse(localStorage.getItem(SKEY)||'{}');}catch{S={};}}
+function save(){try{localStorage.setItem(SKEY,JSON.stringify(S));}catch{}}
+function ck(w,di,ei){return`c_${w}_${di}_${ei}`;}
+function wk(w,di,ei){return`wt_${w}_${di}_${ei}`;}
+
+// ── HELPERS ──
+function typeInfo(t){return{k:{lbl:'Kracht',cls:'k'},r:{lbl:'Run',cls:'r'},c:{lbl:'Conditioning',cls:'c'},x:{lbl:'Rust',cls:'x'}}[t]||{lbl:t,cls:'x'};}
+function tagCls(f,d){if(d)return'tdl';return{fase1:'tf1',fase2:'tf2',fase3:'tf3'}[f]||'tf1';}
+function tagTxt(f,d){if(d)return'Deload';return{fase1:'Fase 1',fase2:'Fase 2',fase3:'Fase 3'}[f]||'';}
+function phaseName(f){return{fase1:'Fase 1',fase2:'Fase 2',fase3:'Fase 3'}[f]||f;}
+
+function weekStats(wd){
+  const total=wd.days.reduce((s,d)=>s+d.ex.length,0);
+  const done=wd.days.reduce((s,d,di)=>s+d.ex.filter((_,ei)=>S[ck(wd.w,di,ei)]).length,0);
+  return{total,done,pct:total>0?Math.round(done/total*100):0};
+}
+
+function globalStats(){
+  let total=0,done=0;
+  const pt={fase1:{t:0,d:0},fase2:{t:0,d:0},fase3:{t:0,d:0}};
+  PLAN.forEach(wd=>{
+    wd.days.forEach((d,di)=>{
+      d.ex.forEach((_,ei)=>{
+        total++;pt[wd.f].t++;
+        if(S[ck(wd.w,di,ei)]){done++;pt[wd.f].d++;}
+      });
+    });
+  });
+  return{total,done,pct:total>0?Math.round(done/total*100):0,pt};
+}
+
+function findNext(){
+  for(const wd of PLAN){
+    for(let di=0;di<wd.days.length;di++){
+      const dayData=wd.days[di];
+      const allDone=dayData.ex.every((_,ei)=>S[ck(wd.w,di,ei)]);
+      if(!allDone)return{wd,di,dayData};
+    }
+  }
+  return null;
+}
+
+// ── PACE ROADMAP ──
+function renderRoadmap(){
+  const el=document.getElementById('roadmapSteps');
+  el.innerHTML='';
+  PACES.forEach((p,i)=>{
+    const step=document.createElement('div');
+    step.className='roadmap-step-inline';
+    step.innerHTML=`
+      <div class="pace-check-sm ${p.state}"></div>
+      <div class="pace-val-sm${p.state==='active'?' active':''}">${p.val}</div>
+      <div class="pace-lbl-sm">${p.lbl}</div>
+    `;
+    el.appendChild(step);
+    if(i<PACES.length-1){
+      const conn=document.createElement('div');
+      conn.className=`pace-connector-sm${p.state==='done'?' done':''}`;
+      el.appendChild(conn);
+    }
+  });
+}
+
+// ── HOME ──
+function updateHome(){
+  const gs=globalStats();
+
+  // Active fase — declare first so it's available everywhere in this function
+  let activeFase='fase1';
+  for(const f of['fase1','fase2','fase3']){
+    const p=gs.pt[f];
+    if(p.d>0&&p.d<p.t){activeFase=f;break;}
+    if(p.d===0){activeFase=f;break;}
+  }
+
+  // Stats
+  // Fase stepper — show active fase, init if not set
+  if(activeFaseIdx===null){
+    activeFaseIdx=['fase1','fase2','fase3'].indexOf(activeFase);
+    if(activeFaseIdx<0)activeFaseIdx=0;
+  }
+  renderFaseStepper(gs);
+
+  const activeWeekData=PLAN.filter(w=>w.f===activeFase).find(w=>{const s=weekStats(w);return s.done<s.total;});
+  document.getElementById('homeActiveFase').textContent=phaseName(activeFase);
+  document.getElementById('homeActiveWeek').textContent=activeWeekData?`Week ${activeWeekData.w} van 24`:'Voltooid';
+
+  // Fase summary
+  const summary=document.getElementById('faseSummary');
+  summary.innerHTML='';
+  ['fase1','fase2','fase3'].forEach((f,i)=>{
+    const meta=FASE_META[f];
+    const p=gs.pt[f];
+    const pct=p.t>0?Math.round(p.d/p.t*100):0;
+    const isActive=f===activeFase;
+    const n=i+1;
+
+    const row=document.createElement('div');
+    row.className='fase-row';
+    row.setAttribute('role','button');
+    row.setAttribute('tabindex','0');
+    row.setAttribute('aria-label',`${meta.name} openen`);
+    row.innerHTML=`
+      <div class="fase-row-top">
+        <div class="fase-row-left">
+          <div class="fase-row-name">${meta.name}</div>
+          <div class="fase-row-weeks">${meta.weeks}</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="fase-badge ${isActive?'active':'inactive'}">${isActive?'Actief':'—'}</span>
+          <span class="fase-row-chev">›</span>
+        </div>
+      </div>
+      <div class="fase-row-goal">${meta.goal}</div>
+      <div class="fase-bar-row">
+        <div class="fase-bar"><div class="fase-bar-fill f${n}" style="width:${pct}%"></div></div>
+        <span class="fase-pct f${n}">${pct}%</span>
+      </div>
+    `;
+    row.addEventListener('click',()=>openFaseDetail(f));
+    row.addEventListener('keydown',(e)=>{if(e.key==='Enter'||e.key===' '){openFaseDetail(f);e.preventDefault();}});
+    summary.appendChild(row);
+  });
+}
+
+// ── FASE DETAIL ──
+function openFaseDetail(fase){
+  const meta=FASE_META[fase];
+  const gs=globalStats();
+  const p=gs.pt[fase];
+  const pct=p.t>0?Math.round(p.d/p.t*100):0;
+  const n=fase.slice(-1);
+
+  const content=document.getElementById('detailContent');
+  content.innerHTML=`
+    <button class="detail-back" onclick="goTab('home')" aria-label="Terug naar home">&#8249; Terug</button>
+    <div class="detail-title">${meta.name}</div>
+    <div class="detail-sub">${meta.goal}</div>
+    <div class="detail-prog-card">
+      <div class="detail-prog-row">
+        <span class="detail-prog-name">${meta.weeks}</span>
+        <span class="detail-prog-pct" style="color:var(--${n==='1'?'accent':n==='2'?'blue':'warning'})">${pct}%</span>
+      </div>
+      <div class="detail-prog-bar"><div class="detail-prog-fill" style="width:${pct}%;background:var(--${n==='1'?'accent':n==='2'?'blue':'warning'})"></div></div>
+    </div>
+    <div class="week-list" id="detail-wl"></div>
+  `;
+
+  const list=document.getElementById('detail-wl');
+  PLAN.filter(w=>w.f===fase).forEach(wd=>{
+    const{total,done,pct:wpct}=weekStats(wd);
+    const complete=done===total&&total>0;
+    const circ=82,offset=circ-(circ*wpct/100);
+
+    const row=document.createElement('div');
+    row.className=`wrow${complete?' wdone':''}`;
+    row.setAttribute('tabindex','0');
+    row.setAttribute('role','button');
+    row.setAttribute('aria-label',`Week ${wd.w} openen`);
+    row.innerHTML=`
+      <div class="wbadge" aria-hidden="true">
+        <div class="wbadge-n">${wd.w}</div>
+        <div class="wbadge-l">week</div>
+      </div>
+      <div class="wrow-info">
+        <div class="wrow-title">Week ${wd.w}${complete?' — Voltooid':''}</div>
+        <div class="wrow-meta">
+          <span class="wtag ${tagCls(wd.f,wd.d)}">${tagTxt(wd.f,wd.d)}</span>
+          <span class="wrow-prog">${done}/${total}</span>
+        </div>
+      </div>
+      <div class="wrow-ring" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 34 34">
+          <circle class="wr-bg" cx="17" cy="17" r="13"/>
+          <circle class="wr-fill" cx="17" cy="17" r="13" style="stroke-dasharray:82;stroke-dashoffset:${offset}"/>
+        </svg>
+        <div class="wr-lbl">${wpct}%</div>
+      </div>
+      <div class="wrow-chev">›</div>
+    `;
+    row.addEventListener('click',()=>openSheet(wd.w,0));
+    row.addEventListener('keydown',(e)=>{if(e.key==='Enter'||e.key===' '){openSheet(wd.w,0);e.preventDefault();}});
+    list.appendChild(row);
+  });
+
+  goTab('detail');
+}
+
+// ── PLAN SCREEN ──
+function renderPlanScreen(){
+  ['fase1','fase2','fase3'].forEach(fase=>{
+    const list=document.getElementById(`wl-${fase}`);
+    list.innerHTML='';
+    PLAN.filter(w=>w.f===fase).forEach(wd=>{
+      const{total,done,pct}=weekStats(wd);
+      const complete=done===total&&total>0;
+      const circ=82,offset=circ-(circ*pct/100);
+
+      const row=document.createElement('div');
+      row.className=`wrow${complete?' wdone':''}`;
+      row.id=`wr-${wd.w}`;
+      row.setAttribute('tabindex','0');
+      row.setAttribute('role','button');
+      row.setAttribute('aria-label',`Week ${wd.w} openen`);
+      row.innerHTML=`
+        <div class="wbadge" aria-hidden="true">
+          <div class="wbadge-n">${wd.w}</div>
+          <div class="wbadge-l">week</div>
+        </div>
+        <div class="wrow-info">
+          <div class="wrow-title">Week ${wd.w}${complete?' — Voltooid':''}</div>
+          <div class="wrow-meta">
+            <span class="wtag ${tagCls(wd.f,wd.d)}">${tagTxt(wd.f,wd.d)}</span>
+            <span class="wrow-prog" id="wrp-${wd.w}">${done}/${total}</span>
+          </div>
+        </div>
+        <div class="wrow-ring" aria-hidden="true">
+          <svg width="34" height="34" viewBox="0 0 34 34">
+            <circle class="wr-bg" cx="17" cy="17" r="13"/>
+            <circle class="wr-fill" id="wrf-${wd.w}" cx="17" cy="17" r="13" style="stroke-dasharray:82;stroke-dashoffset:${offset}"/>
+          </svg>
+          <div class="wr-lbl" id="wrl-${wd.w}">${pct}%</div>
+        </div>
+        <div class="wrow-chev">›</div>
+      `;
+      row.addEventListener('click',()=>openSheet(wd.w,0));
+      row.addEventListener('keydown',(e)=>{if(e.key==='Enter'||e.key===' '){openSheet(wd.w,0);e.preventDefault();}});
+      list.appendChild(row);
+    });
+  });
+}
+
+function refreshWeekRow(w){
+  const wd=PLAN.find(x=>x.w===w);
+  const{total,done,pct}=weekStats(wd);
+  const complete=done===total&&total>0;
+  const row=document.getElementById(`wr-${w}`);
+  if(row){row.classList.toggle('wdone',complete);row.querySelector('.wrow-title').textContent=`Week ${w}${complete?' — Voltooid':''}`;}
+  const prg=document.getElementById(`wrp-${w}`);if(prg)prg.textContent=`${done}/${total}`;
+  const rf=document.getElementById(`wrf-${w}`);
+  const rl=document.getElementById(`wrl-${w}`);
+  const circ=82;
+  if(rf)rf.style.strokeDashoffset=circ-(circ*pct/100);
+  if(rl)rl.textContent=pct+'%';
+}
+
+// ── BOTTOM SHEET ──
+let sheetW=null,sheetDi=null;
+
+function openSheet(w,di){
+  sheetW=w;sheetDi=di;
+  const wd=PLAN.find(x=>x.w===w);
+  const dayData=wd.days[di];
+  const ti=typeInfo(dayData.type);
+
+  document.getElementById('sheetEyebrow').textContent=`Week ${w} · ${phaseName(wd.f)}${wd.d?' · Deload':''}`;
+  document.getElementById('sheetTitle').textContent=dayData.day;
+  document.getElementById('sheetPills').innerHTML=`
+    <span class="pill pill-type-${ti.cls}">${ti.lbl}</span>
+    <span class="pill pill-week">Week ${w}</span>
+    <span class="pill pill-fase">${phaseName(wd.f)}</span>
+  `;
+
+  renderSheetBody(w,di);
+  updateSheetFooter(w,di);
+
+  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('show');
+  document.getElementById('sheet').removeAttribute('aria-hidden');
+}
+
+function renderSheetBody(w,di){
+  const wd=PLAN.find(x=>x.w===w);
+  const body=document.getElementById('sheetBody');
+  body.innerHTML='';
+  const dayData=wd.days[di];
+  dayData.ex.forEach((ex,ei)=>{
+    const checked=S[ck(w,di,ei)]||false;
+    const savedWt=S[wk(w,di,ei)]||'';
+    const row=document.createElement('div');
+    row.className=`ex-row${checked?' checked':''}`;
+    row.id=`sex-${w}-${di}-${ei}`;
+    row.setAttribute('tabindex','0');
+    row.setAttribute('role','checkbox');
+    row.setAttribute('aria-checked',checked?'true':'false');
+    row.setAttribute('aria-label',ex.n);
+    row.innerHTML=`
+      <div class="ex-chk" aria-hidden="true"><span class="ex-chk-icon">&#10003;</span></div>
+      <div class="ex-content">
+        <div class="ex-name">${ex.n}</div>
+        ${ex.s?`<div class="ex-sets">${ex.s}</div>`:''}
+        ${ex.note?`<div class="ex-note">${ex.note}</div>`:''}
+        ${ex.wt?`<div class="wt-row" onclick="event.stopPropagation()">
+          <input type="text" inputmode="decimal" class="wt-input"
+            id="wti-${w}-${di}-${ei}" placeholder="kg / notitie"
+            value="${savedWt}" aria-label="Gewicht ${ex.n}"
+            onchange="saveWt(${w},${di},${ei},this.value)"
+            onblur="saveWt(${w},${di},${ei},this.value)"/>
+          <span class="wt-saved" id="wts-${w}-${di}-${ei}">Opgeslagen</span>
+        </div>`:''}
+      </div>`;
+    row.addEventListener('click',()=>toggleEx(w,di,ei));
+    row.addEventListener('keydown',(e)=>{if(e.key==='Enter'||e.key===' '){toggleEx(w,di,ei);e.preventDefault();}});
+    body.appendChild(row);
+  });
+}
+
+function updateSheetFooter(w,di){
+  const wd=PLAN.find(x=>x.w===w);
+  const dayData=wd.days[di];
+  const total=dayData.ex.length;
+  const done=dayData.ex.filter((_,ei)=>S[ck(w,di,ei)]).length;
+  const pct=total>0?Math.round(done/total*100):0;
+  document.getElementById('sheetProgLbl').textContent=`${done} / ${total} voltooid`;
+  document.getElementById('sheetProgFill').style.width=pct+'%';
+  updateMarkAllBtn(w,di);
+  // Enable/disable next button based on whether a next incomplete workout exists
+  let hasNext=false;
+  let found=false;
+  for(const wd2 of PLAN){
+    for(let di2=0;di2<wd2.days.length;di2++){
+      if(wd2.w===w&&di2===di){found=true;continue;}
+      if(!found)continue;
+      const allDone=wd2.days[di2].ex.every((_,ei)=>S[ck(wd2.w,di2,ei)]);
+      if(!allDone){hasNext=true;break;}
+    }
+    if(hasNext)break;
+  }
+  const btn=document.getElementById('btnNextWorkout');
+  if(btn)btn.disabled=!hasNext;
+}
+
+function closeSheet(){
+  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('sheet').classList.remove('show');
+  document.getElementById('sheet').setAttribute('aria-hidden','true');
+  sheetW=null;sheetDi=null;
+}
+
+function toggleEx(w,di,ei){
+  const key=ck(w,di,ei);
+  S[key]=!S[key];save();
+  const row=document.getElementById(`sex-${w}-${di}-${ei}`);
+  if(row){row.classList.toggle('checked',S[key]);row.setAttribute('aria-checked',S[key]?'true':'false');}
+  updateSheetFooter(w,di);
+  refreshWeekRow(w);
+  updateHome();
+  renderCal();
+  const wd=PLAN.find(x=>x.w===w);
+  const dayData=wd.days[di];
+  const dayDone=dayData.ex.every((_,ei2)=>S[ck(w,di,ei2)]);
+  if(dayDone&&S[key])showToast(`${dayData.day} voltooid`);
+}
+
+function saveWt(w,di,ei,val){
+  S[wk(w,di,ei)]=val;save();
+  const el=document.getElementById(`wts-${w}-${di}-${ei}`);
+  if(el){el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1800);}
+}
+
+function goNextWorkout(){
+  // Find next incomplete workout after current
+  let found=false;
+  for(const wd of PLAN){
+    for(let di=0;di<wd.days.length;di++){
+      // Skip current
+      if(wd.w===sheetW&&di===sheetDi){found=true;continue;}
+      if(!found)continue;
+      const dayData=wd.days[di];
+      const allDone=dayData.ex.every((_,ei)=>S[ck(wd.w,di,ei)]);
+      if(!allDone){
+        // Load this workout into the sheet without closing
+        sheetW=wd.w;sheetDi=di;
+        const ti=typeInfo(dayData.type);
+        document.getElementById('sheetEyebrow').textContent=`Week ${wd.w} · ${phaseName(wd.f)}${wd.d?' · Deload':''}`;
+        document.getElementById('sheetTitle').textContent=dayData.day;
+        document.getElementById('sheetPills').innerHTML=`
+          <span class="pill pill-type-${ti.cls}">${ti.lbl}</span>
+          <span class="pill pill-week">Week ${wd.w}</span>
+          <span class="pill pill-fase">${phaseName(wd.f)}</span>
+        `;
+        renderSheetBody(wd.w,di);
+        updateSheetFooter(wd.w,di);
+        // Scroll sheet body to top
+        document.getElementById('sheetBody').scrollTop=0;
+        return;
+      }
+    }
+  }
+  // No next incomplete workout found
+  document.getElementById('btnNextWorkout').disabled=true;
+}
+
+function updateMarkAllBtn(w,di){
+  const wd=PLAN.find(x=>x.w===w);
+  const dayData=wd.days[di];
+  const allDone=dayData.ex.every((_,ei)=>S[ck(w,di,ei)]);
+  const btn=document.getElementById('btnMarkAll');
+  if(!btn)return;
+  if(allDone){
+    btn.textContent='Dag ontvinken';
+    btn.style.background='rgba(242,76,76,.1)';
+    btn.style.color='var(--error)';
+    btn.onclick=()=>uncheckDay();
+  } else {
+    btn.textContent='Alles afvinken';
+    btn.style.background='rgba(230,242,76,.12)';
+    btn.style.color='var(--accent)';
+    btn.onclick=()=>markAllSheet();
+  }
+}
+
+function uncheckDay(){
+  if(sheetW===null)return;
+  const wd=PLAN.find(x=>x.w===sheetW);
+  const dayData=wd.days[sheetDi];
+  dayData.ex.forEach((_,ei)=>{
+    S[ck(sheetW,sheetDi,ei)]=false;
+    const row=document.getElementById(`sex-${sheetW}-${sheetDi}-${ei}`);
+    if(row){row.classList.remove('checked');row.setAttribute('aria-checked','false');}
+  });
+  save();
+  updateSheetFooter(sheetW,sheetDi);
+  refreshWeekRow(sheetW);
+  updateHome();
+  renderCal();
+  showToast(`${dayData.day} ontvinkt`);
+}
+
+function markAllSheet(){
+  if(sheetW===null)return;
+  const wd=PLAN.find(x=>x.w===sheetW);
+  const dayData=wd.days[sheetDi];
+  dayData.ex.forEach((_,ei)=>{
+    S[ck(sheetW,sheetDi,ei)]=true;
+    const row=document.getElementById(`sex-${sheetW}-${sheetDi}-${ei}`);
+    if(row){row.classList.add('checked');row.setAttribute('aria-checked','true');}
+  });
+  save();
+  updateSheetFooter(sheetW,sheetDi);
+  refreshWeekRow(sheetW);
+  updateHome();
+  renderCal();
+  showToast(`${dayData.day} afgevinkt`);
+}
+
+// ── NAVIGATION ──
+function goTab(tab){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  const screen=document.getElementById(`screen-${tab}`);
+  if(screen)screen.classList.add('active');
+  const tabBtn=document.getElementById(`tab-${tab}`);
+  if(tabBtn)tabBtn.classList.add('active');
+  // detail screen doesn't have a tab
+  if(tab==='detail'){
+    document.getElementById('tab-home').classList.add('active');
+  }
+}
+
+function switchPhase(fase,btn){
+  document.querySelectorAll('.phase-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.seg-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+  document.getElementById(`pp-${fase}`).classList.add('active');
+  btn.classList.add('active');btn.setAttribute('aria-selected','true');
+}
+
+function openNextWorkout(){
+  const next=findNext();
+  if(next)openSheet(next.wd.w,next.di);
+}
+
+// ── TOAST ──
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+// ── FASE STEPPER ──
+let activeFaseIdx=null;
+const FASES=[
+  {f:'fase1',name:'Fase 1',color:'var(--accent)'},
+  {f:'fase2',name:'Fase 2',color:'var(--blue)'},
+  {f:'fase3',name:'Fase 3',color:'var(--warning)'},
+];
+
+function renderFaseStepper(gs){
+  if(activeFaseIdx===null)activeFaseIdx=0;
+  const {f,name,color}=FASES[activeFaseIdx];
+  const p=gs?gs.pt[f]:globalStats().pt[f];
+  const pct=p.t>0?Math.round(p.d/p.t*100):0;
+
+  const body=document.getElementById('faseStepperBody');
+  if(body){
+    body.innerHTML=`
+      <div class="fase-stepper-name">${name}</div>
+      <div class="fase-stepper-count">${p.d} / ${p.t}</div>
+      <div class="fase-stepper-bar"><div class="fase-stepper-fill" style="width:${pct}%;background:${color}"></div></div>
+    `;
+  }
+  const prev=document.getElementById('fasePrev');
+  const next=document.getElementById('faseNext');
+  if(prev)prev.disabled=activeFaseIdx===0;
+  if(next)next.disabled=activeFaseIdx===FASES.length-1;
+}
+
+function faseNav(dir){
+  activeFaseIdx=Math.max(0,Math.min(FASES.length-1,activeFaseIdx+dir));
+  renderFaseStepper(null);
+}
+
+// ── CALENDAR STEPPER ──
+let calWeek=null; // current displayed week number
+
+const TYPE_ABBR={k:'KR',r:'RN',c:'CO',x:'RS'};
+const DAY_ABBR={
+  'Maandag':'Ma','Dinsdag':'Di','Woensdag':'Wo',
+  'Donderdag':'Do','Vrijdag':'Vr','Zaterdag':'Za','Zondag':'Zo'
+};
+
+function getActiveWeek(){
+  // The week that has the next incomplete workout
+  const next=findNext();
+  return next?next.wd.w:1;
+}
+
+// Track which day is selected in the calendar
+let calSelectedDi=null;
+
+function renderCal(){
+  if(calWeek===null) calWeek=getActiveWeek();
+  const wd=PLAN.find(x=>x.w===calWeek);
+  if(!wd) return;
+
+  // Set selected day to next incomplete if not set or switching weeks
+  const globalNext=findNext();
+  const nextDiInWeek=(globalNext&&globalNext.wd.w===calWeek)?globalNext.di:0;
+  if(calSelectedDi===null) calSelectedDi=nextDiInWeek;
+
+  // Header
+  document.getElementById('calWeekLabel').textContent=`Week ${calWeek} · ${phaseName(wd.f)}${wd.d?' · Deload':''}`;
+  document.getElementById('calPrev').disabled=calWeek<=1;
+  document.getElementById('calNext').disabled=calWeek>=24;
+
+  // Days
+  const container=document.getElementById('calDays');
+  container.innerHTML='';
+
+  wd.days.forEach((dayData,di)=>{
+    const allDone=dayData.ex.every((_,ei)=>S[ck(calWeek,di,ei)]);
+    const isSelected=di===calSelectedDi;
+    const isGlobalNext=globalNext&&globalNext.wd.w===calWeek&&globalNext.di===di;
+
+    let state=isSelected?'state-active':allDone?'state-done':'state-next';
+
+    const abbr=DAY_ABBR[dayData.day]||dayData.day.slice(0,2);
+    const typeAbbr=TYPE_ABBR[dayData.type]||'—';
+
+    const btn=document.createElement('button');
+    btn.className=`cal-day ${state}`;
+    btn.setAttribute('aria-label',`${dayData.day} — ${typeAbbr}`);
+    btn.innerHTML=`
+      <div class="cal-day-abbr">${abbr}</div>
+      <div class="cal-day-icon">${typeAbbr}</div>
+      <div class="cal-day-dot"></div>
+    `;
+    btn.addEventListener('click',()=>{
+      calSelectedDi=di;
+      renderCal();
+    });
+    container.appendChild(btn);
+  });
+
+  // Render workout preview for selected day
+  renderCombinedWorkout(calWeek, calSelectedDi);
+}
+
+function renderCombinedWorkout(w, di){
+  const wd=PLAN.find(x=>x.w===w);
+  if(!wd) return;
+  const dayData=wd.days[di];
+  const ti=typeInfo(dayData.type);
+  const total=dayData.ex.length;
+  const done=dayData.ex.filter((_,ei)=>S[ck(w,di,ei)]).length;
+  const pct=total>0?Math.round(done/total*100):0;
+  const allDone=done===total&&total>0;
+
+  // Eyebrow
+  const globalNext=findNext();
+  const isNext=globalNext&&globalNext.wd.w===w&&globalNext.di===di;
+  document.getElementById('cwEyebrow').textContent=isNext?'Volgende workout':allDone?'Voltooid':'Workout';
+
+  // Day name
+  document.getElementById('cwDay').textContent=dayData.day;
+
+  // Pills
+  document.getElementById('cwPills').innerHTML=`
+    <span class="pill pill-type-${ti.cls}">${ti.lbl}</span>
+    <span class="pill pill-week">Week ${w}</span>
+    <span class="pill pill-fase">${phaseName(wd.f)}</span>
+  `;
+
+  // Progress ring
+  const circ=107;
+  const ring=document.getElementById('cwRingFill');
+  const txt=document.getElementById('cwRingTxt');
+  const wrap=document.getElementById('combinedWorkout');
+  if(ring) ring.style.strokeDashoffset=circ-(circ*pct/100);
+  if(txt) txt.textContent=pct+'%';
+  if(wrap) wrap.classList.toggle('cw-done', allDone);
+
+  // Store for openSelectedWorkout
+  document.getElementById('combinedWorkout').dataset.w=w;
+  document.getElementById('combinedWorkout').dataset.di=di;
+}
+
+function openSelectedWorkout(){
+  const el=document.getElementById('combinedWorkout');
+  const w=parseInt(el.dataset.w);
+  const di=parseInt(el.dataset.di);
+  if(!isNaN(w)&&!isNaN(di)) openSheet(w,di);
+}
+
+function calNav(dir){
+  calWeek=Math.max(1,Math.min(24,(calWeek||1)+dir));
+  calSelectedDi=null; // reset to first/next day of new week
+  renderCal();
+}
+
+// ── INIT ──
+load();
+renderRoadmap();
+renderPlanScreen();
+calWeek=null; // will be set to active week on first render
+updateHome();
+renderCal();
+</script>
+</body>
+</html>
