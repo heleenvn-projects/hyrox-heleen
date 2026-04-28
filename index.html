@@ -1060,6 +1060,7 @@ function globalStats(){
 }
 
 function findNext(){
+  // Returns first incomplete workout regardless of date
   for(const wd of PLAN){
     for(let di=0;di<wd.days.length;di++){
       const dayData=wd.days[di];
@@ -1068,6 +1069,32 @@ function findNext(){
     }
   }
   return null;
+}
+
+// Day-of-week index: 0=Mon,1=Tue,...,6=Sun
+const DAY_ORDER={'Maandag':0,'Dinsdag':1,'Woensdag':2,'Donderdag':3,'Vrijdag':4,'Zaterdag':5,'Zondag':6};
+
+function findNextFromToday(){
+  // Returns the next incomplete workout from today onwards (by day-of-week).
+  // If nothing incomplete today or later this week, look at future weeks.
+  // Falls back to first incomplete (past workouts user hasn't done yet).
+  const todayDow=((new Date().getDay())+6)%7; // JS 0=Sun→ convert to Mon=0
+
+  // First pass: find first incomplete workout today or later
+  for(const wd of PLAN){
+    for(let di=0;di<wd.days.length;di++){
+      const dayData=wd.days[di];
+      const allDone=dayData.ex.every((_,ei)=>S[ck(wd.w,di,ei)]);
+      if(allDone) continue;
+      const dayDow=DAY_ORDER[dayData.day]??di;
+      // Accept if this day is today or in the future (by dow) OR in a later week
+      // We determine "future" by checking if any earlier day in same week is incomplete
+      // Simple heuristic: once we find an incomplete workout, check if it's today or later
+      if(dayDow>=todayDow) return{wd,di,dayData};
+    }
+  }
+  // Second pass: nothing today or later — fall back to first incomplete (overdue)
+  return findNext();
 }
 
 // ── PACE ROADMAP ──
@@ -1118,8 +1145,8 @@ function updateHome(){
   const pctEl=document.getElementById('homePct');
   if(pctEl) pctEl.textContent=`${gs.done} / ${gs.total}`;
 
-  // Next workout big card
-  const next=findNext();
+  // Next workout big card — use today-aware next
+  const next=findNextFromToday();
   if(next){
     const{wd,di,dayData}=next;
     const ti=typeInfo(dayData.type);
@@ -1134,6 +1161,11 @@ function updateHome(){
     if(dayEl) dayEl.textContent='Alles voltooid';
     const metaEl=document.getElementById('bcMeta');
     if(metaEl) metaEl.textContent='24 weken klaar';
+  }
+  // Sync calWeek to today-aware next (but only if user hasn't manually navigated)
+  if(calWeek===null){
+    const cn=findNextFromToday();
+    calWeek=cn?cn.wd.w:1;
   }
 }
 
@@ -1528,9 +1560,9 @@ const TYPE_ABBR={k:'KR',r:'RN',c:'CO',x:'RS'};
 
 // ── CALENDAR ──
 function renderCal(){
-  // Init calWeek to active week if not set
+  // Init calWeek to today-aware active week if not set
   if(calWeek===null){
-    const next=findNext();
+    const next=findNextFromToday();
     calWeek=next?next.wd.w:1;
   }
   const wd=PLAN.find(x=>x.w===calWeek);
@@ -1542,12 +1574,16 @@ function renderCal(){
 
   const container=document.getElementById('calDays');
   container.innerHTML='';
-  const globalNext=findNext();
+  const globalNext=findNextFromToday();
+  // Also get absolute first incomplete as fallback for calendar highlight
+  const absoluteNext=findNext();
 
   wd.days.forEach((dayData,di)=>{
     const allDone=dayData.ex.every((_,ei)=>S[ck(calWeek,di,ei)]);
-    const isGlobalNext=globalNext&&globalNext.wd.w===calWeek&&globalNext.di===di;
-    const state=isGlobalNext?'cd-active':allDone?'cd-done':'cd-next';
+    // Highlight today-aware next; if that's in a different week, fall back to absolute
+    const isActive=(globalNext&&globalNext.wd.w===calWeek&&globalNext.di===di)||
+                   (!globalNext&&absoluteNext&&absoluteNext.wd.w===calWeek&&absoluteNext.di===di);
+    const state=isActive?'cd-active':allDone?'cd-done':'cd-next';
 
     const abbr=DAY_ABBR[dayData.day]||dayData.day.slice(0,2);
     const typeAbbr=TYPE_ABBR[dayData.type]||'—';
