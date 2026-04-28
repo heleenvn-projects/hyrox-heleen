@@ -1046,14 +1046,14 @@ function weekStats(wd){
 }
 
 function globalStats(){
+  // Count workouts (days) not exercises
   let total=0,done=0;
   const pt={fase1:{t:0,d:0},fase2:{t:0,d:0},fase3:{t:0,d:0}};
   PLAN.forEach(wd=>{
     wd.days.forEach((d,di)=>{
-      d.ex.forEach((_,ei)=>{
-        total++;pt[wd.f].t++;
-        if(S[ck(wd.w,di,ei)]){done++;pt[wd.f].d++;}
-      });
+      total++;pt[wd.f].t++;
+      const dayDone=d.ex.every((_,ei)=>S[ck(wd.w,di,ei)]);
+      if(dayDone){done++;pt[wd.f].d++;}
     });
   });
   return{total,done,pct:total>0?Math.round(done/total*100):0,pt};
