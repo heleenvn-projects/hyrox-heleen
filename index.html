@@ -1203,25 +1203,23 @@ function findNext(){
 const DAY_ORDER={'Maandag':0,'Dinsdag':1,'Woensdag':2,'Donderdag':3,'Vrijdag':4,'Zaterdag':5,'Zondag':6};
 
 function findNextFromToday(){
-  // Returns the next incomplete workout from today onwards (by day-of-week).
-  // If nothing incomplete today or later this week, look at future weeks.
-  // Falls back to first incomplete (past workouts user hasn't done yet).
-  const todayDow=((new Date().getDay())+6)%7; // JS 0=Sun→ convert to Mon=0
+  // Strategy:
+  // 1. If today has an incomplete workout → show it
+  // 2. Otherwise → show next incomplete in plan order (could be tomorrow or later)
+  // This way Sunday done = Monday shown, not stuck on Sunday
+  const todayDow=((new Date().getDay())+6)%7; // Mon=0 ... Sun=6
 
-  // First pass: find first incomplete workout today or later
+  // Check if today itself has an incomplete workout
   for(const wd of PLAN){
     for(let di=0;di<wd.days.length;di++){
       const dayData=wd.days[di];
       const allDone=dayData.ex.every((_,ei)=>S[ck(wd.w,di,ei)]);
       if(allDone) continue;
       const dayDow=DAY_ORDER[dayData.day]??di;
-      // Accept if this day is today or in the future (by dow) OR in a later week
-      // We determine "future" by checking if any earlier day in same week is incomplete
-      // Simple heuristic: once we find an incomplete workout, check if it's today or later
-      if(dayDow>=todayDow) return{wd,di,dayData};
+      if(dayDow===todayDow) return{wd,di,dayData}; // today has work to do
     }
   }
-  // Second pass: nothing today or later — fall back to first incomplete (overdue)
+  // Today is done (or no workout today) → just return next incomplete in order
   return findNext();
 }
 
