@@ -52,10 +52,10 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#F0EB
   width:36px;height:36px;border-radius:50%;background:#C17F4A;
   display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;
 }
-.agent-name{font-size:15px;font-weight:700;color:#F0EBE3;}
-.agent-sub{font-size:11px;color:#6B5C4E;margin-top:1px;}
+.agent-name{font-size:16px;font-weight:800;color:#F0EBE3;letter-spacing:-.2px;}
+.agent-sub{font-size:11px;color:#A89880;margin-top:1px;}
 .agent-header-right{margin-left:auto;display:flex;gap:6px;}
-.hdr-btn{padding:8px 14px;border-radius:9px;background:transparent;border:0.5px solid #3A3228;color:#6B5C4E;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.2px;font-family:'Inter',-apple-system,sans-serif;min-height:36px;display:flex;align-items:center;}
+.hdr-btn{padding:8px 14px;border-radius:9px;background:transparent;border:0.5px solid #3A3228;color:#A89880;font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.2px;font-family:'Inter',-apple-system,sans-serif;min-height:36px;display:flex;align-items:center;}
 .hdr-btn:active{background:#231F1A;color:#F0EBE3;}
 
 /* Chat */
@@ -66,8 +66,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#F0EB
 .chat-msg{display:flex;gap:8px;align-items:flex-end;}
 .chat-msg.user{flex-direction:row-reverse;}
 .chat-bubble{
-  max-width:86%;padding:11px 14px;border-radius:18px;
-  font-size:14px;line-height:1.6;word-break:break-word;
+  max-width:86%;padding:12px 15px;border-radius:18px;
+  font-size:15px;line-height:1.6;word-break:break-word;
 }
 .chat-msg.coach .chat-bubble{
   background:#231F1A;color:#F0EBE3;border-bottom-left-radius:4px;
@@ -160,8 +160,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#F0EB
 .chips-wrap{flex-shrink:0;padding:6px 16px 4px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;}
 .chips-wrap::-webkit-scrollbar{display:none;}
 .chip{
-  flex-shrink:0;padding:8px 13px;border-radius:999px;border:1px solid #3A3228;
-  background:#231F1A;color:#A89880;font-size:12px;font-weight:600;cursor:pointer;
+  flex-shrink:0;padding:9px 15px;border-radius:999px;border:1px solid #3A3228;
+  background:#231F1A;color:#A89880;font-size:13px;font-weight:600;cursor:pointer;
   white-space:nowrap;transition:all .15s;font-family:'Inter',-apple-system,sans-serif;
 }
 .chip:active{background:#2C271F;color:#F0EBE3;}
@@ -170,31 +170,31 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#F0EB
 
 /* Input bar */
 .chat-input-bar{
-  flex-shrink:0;display:flex;align-items:flex-end;gap:8px;
-  padding:8px 16px calc(env(safe-area-inset-bottom,20px)+6px);
+  flex-shrink:0;display:flex;align-items:flex-end;gap:10px;
+  padding:10px 16px calc(env(safe-area-inset-bottom,20px)+10px);
   border-top:0.5px solid #2C271F;background:#1A1612;
 }
 .chat-inp{
   flex:1;background:#231F1A;border:1px solid #3A3228;border-radius:20px;
-  padding:9px 14px;color:#F0EBE3;font-size:14px;
+  padding:11px 16px;color:#F0EBE3;font-size:15px;
   font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-  resize:none;outline:none;max-height:90px;overflow-y:auto;line-height:1.4;
-  -webkit-appearance:none;
+  resize:none;outline:none;max-height:120px;overflow-y:auto;line-height:1.5;
+  -webkit-appearance:none;min-height:44px;
 }
 .chat-inp:focus{border-color:rgba(193,127,74,.5);}
 .chat-inp::placeholder{color:#6B5C4E;}
 .send-btn{
-  width:36px;height:36px;border-radius:50%;background:#C17F4A;border:none;
-  display:flex;align-items:center;justify-content:center;font-size:17px;color:#1A1612;
+  width:40px;height:40px;border-radius:50%;background:#C17F4A;border:none;
+  display:flex;align-items:center;justify-content:center;font-size:18px;color:#1A1612;
   font-weight:700;flex-shrink:0;cursor:pointer;transition:opacity .15s;
 }
 .send-btn:disabled{opacity:.35;pointer-events:none;}
 .send-btn:active{opacity:.7;}
 
 /* ── PLAN SCREEN ── */
-#screen-plan,#screen-detail,#screen-food{background:#1A1612;}
+#screen-plan,#screen-detail,#screen-food{background:#1A1612;overflow:hidden;}
 .sub-scroll{
-  overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;
+  overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;min-height:0;
   padding:calc(env(safe-area-inset-top,44px)+16px) 18px calc(env(safe-area-inset-bottom,20px)+20px);
 }
 .back-btn{
@@ -240,7 +240,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#F0EB
 /* Food screen */
 .food-header{flex-shrink:0;padding:calc(env(safe-area-inset-top,44px)+14px) 18px 0;}
 .food-seg-wrap{flex-shrink:0;padding:10px 18px;border-bottom:0.5px solid #2C271F;}
-.food-content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 18px calc(env(safe-area-inset-bottom,20px)+16px);}
+.food-content{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 18px calc(env(safe-area-inset-bottom,20px)+16px);}
 .food-panel{display:none;}.food-panel.active{display:flex;flex-direction:column;gap:10px;}
 .food-card{background:#231F1A;border-radius:16px;border:0.5px solid #3A3228;overflow:hidden;}
 .food-item{border-bottom:0.5px solid #2C271F;}
@@ -1511,7 +1511,7 @@ async function callCoach(userMsg,isProactive=false){
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({
         model:'claude-sonnet-4-6',
         max_tokens:450,
@@ -2096,6 +2096,34 @@ function initInputResize(){
   });
 }
 
+
+// ── SCREEN SWIPE NAVIGATION (swipe right = back) ──
+function initScreenSwipe(){
+  let sx=0,sy=0,active=false;
+  document.addEventListener('touchstart',(e)=>{
+    // Only trigger from left edge (first 30px) or on non-home screens
+    const screen=document.querySelector('.screen.active');
+    if(!screen||screen.id==='screen-home') return;
+    // Ignore if touch starts on a scrollable element
+    if(e.target.closest('.sub-scroll,.food-content,.sheet-body,.chat-scroll')) return;
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;active=true;
+  },{passive:true});
+  document.addEventListener('touchend',(e)=>{
+    if(!active) return;active=false;
+    const dx=e.changedTouches[0].clientX-sx;
+    const dy=Math.abs(e.changedTouches[0].clientY-sy);
+    // Swipe right > 80px, more horizontal than vertical
+    if(dx>80&&dy<60){
+      const screen=document.querySelector('.screen.active');
+      if(screen&&screen.id!=='screen-home'){
+        // Go back
+        if(screen.id==='screen-detail') goTab(detailReferrer||'home');
+        else goTab('home');
+      }
+    }
+  },{passive:true});
+}
+
 // ── INIT ──
 load();
 renderPlanScreen();
@@ -2103,6 +2131,7 @@ renderFood();
 renderChips();
 initSwipeToClose();
 initInputResize();
+initScreenSwipe();
 setTimeout(()=>dailyBriefing(),500);
 
 </script>
