@@ -1519,9 +1519,10 @@ async function callCoach(userMsg,isProactive=false){
         messages
       })
     });
+    if(!res.ok){hideTyping();addCoachMsg('Fout '+res.status+'. Probeer opnieuw.');chatLoading=false;document.getElementById('sendBtn').disabled=false;document.getElementById('chatInp').disabled=false;return;}
     const data=await res.json();
     hideTyping();
-    let reply=data.content?.[0]?.text||'Er ging iets mis.';
+    let reply=(data&&data.content&&data.content[0]?data.content[0].text:null)||'Kon geen antwoord laden.';
 
     // Extract and save coach observation
     const obsMatch=reply.match(/\[OBSERVATIE:\s*([^\]]+)\]/);
@@ -1591,7 +1592,14 @@ function hideTyping(){const el=document.getElementById('typingEl');if(el)el.remo
 // ── WORKOUT CARD IN CHAT ──
 function addWorkoutCard(wd,di){
   const scroll=document.getElementById('chatScroll');
-  if(!wd||!wd.days||!wd.days[di]) return;
+  if(!wd||!wd.days||!wd.days[di]){
+    // All done state
+    const div=document.createElement('div');
+    div.className='chat-msg coach';
+    div.innerHTML='<div class="coach-avatar-sm"></div><div class="chat-bubble" style="color:#7CB87A;font-weight:600">Alle workouts voor dit plan zijn voltooid. Goed gedaan.</div>';
+    scroll.appendChild(div);scroll.scrollTop=scroll.scrollHeight;
+    return;
+  }
   const dayData=wd.days[di];
   const ti=typeInfo(dayData.type);
   const doneCnt=dayData.ex.filter((_,ei)=>S[ck(wd.w,di,ei)]).length;
