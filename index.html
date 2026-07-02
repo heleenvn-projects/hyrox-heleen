@@ -60,7 +60,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#F0EB
 
 /* Chat */
 .chat-scroll{
-  flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
   padding:14px 16px 20px;display:flex;flex-direction:column;gap:12px;
 }
 .chat-msg{display:flex;gap:8px;align-items:flex-end;}
@@ -157,7 +157,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#F0EB
 @keyframes dot{0%,80%,100%{transform:scale(.6);opacity:.4;}40%{transform:scale(1);opacity:1;}}
 
 /* Quick chips */
-.chips-wrap{flex-shrink:0;padding:8px 16px 8px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;}
+.chips-wrap{flex-shrink:0;padding:8px 16px 8px;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;min-height:52px;align-items:center;}
 .chips-wrap::-webkit-scrollbar{display:none;}
 .chip{
   flex-shrink:0;padding:9px 15px;border-radius:999px;border:1px solid #3A3228;
@@ -175,7 +175,7 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;color:#F0EB
   border-top:0.5px solid #2C271F;background:#1A1612;
 }
 .chat-inp{
-  flex:1;background:#231F1A;border:1px solid #3A3228;border-radius:20px;
+  flex:1;min-width:0;background:#231F1A;border:1px solid #3A3228;border-radius:20px;
   padding:11px 16px;color:#F0EBE3;font-size:15px;
   font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
   resize:none;outline:none;max-height:120px;overflow-y:auto;line-height:1.5;
@@ -1509,42 +1509,39 @@ Voortgang: ${gs.done}/${gs.total} workouts gedaan (${gs.pct}%)`;
 }
 
 // ── COACH AI ──
-const COACH_SYSTEM=`Je bent het hybrid coaching team van Heleen. Jij bent haar persoonlijke coach die haar KENT — haar geschiedenis, haar progressie, haar klachten en haar leven.
+const COACH_SYSTEM=`Je bent het persoonlijk coaching team van Heleen.
 
 JE IDENTITEIT:
-- Als hardloopcoach spreek je als Jack Daniels: bewijs-gestuurd, precies, periodisering-gericht
-- Als Hyrox coach spreek je als Meg Sutherland: praktisch, race-specifiek, functioneel sterk
-- Je combineert beide perspectieven naadloos in één stem
-
-JE COMBINEERT:
-- Jack Daniels (hardlopen): bewijs-gestuurd, precies over paces, VO2max zones, periodisering
-- Meg Sutherland (Hyrox): race-specifiek, station techniek, kracht voor Hyrox
+Je combineert twee coaching stijlen naadloos als één stem:
+- Jack Daniels (hardlopen): bewijs-gestuurd, precies over paces, zones, VO2max, periodisering
+- Meg Sutherland (Hyrox/hybrid): race-specifiek, stationstechniek, functionele kracht
 
 HELEEN'S PROFIEL:
-Doelen: Mixed Doubles Hyrox sub 1:20 · 10K sub 50 min · later solo Hyrox
-Plan: 24 weken. Ma=run · Wo=kracht · Vr=long run · Za=kracht · Zo=conditioning
-T-pace: 5:15/km (nu) → 4:10/km (doel)
-KNIE RECHTS: stijfheid mediaal+lateraal+patellofemoriaal. Geen zwelling. Protocol: step-ups i.p.v. split squat, squat max parallel, geen trappen/heuvel eerste weken. Verwijs naar fysio als geen verbetering.
-GROIN RECHTS: iliopsoas. Lunges voorzichtig vanaf week 9.
-RESTART: na 1 maand pauze. Opnieuw vanaf week 3.
-Voeding: 80% plantaardig, zuivel+eieren ok, max 20% kip/kalkoen/vis. Doel 110-130g eiwit.
-Supplementen: creatine 3-5g/dag, collageen, vegan eiwitpoeder.
+- 34 jaar, vrouw, Rotterdam
+- Al redelijk fit, wil verder gaan
+- Doelen: Mixed Doubles Hyrox sub 1:20 · 10K sub 50 min · later solo Hyrox
+- Trainingsplan: 24 weken. Ma=run · Wo=kracht · Vr=long run · Za=kracht · Zo=conditioning
+- T-pace: nu 5:15/km → doel 4:10/km
+- Gevoelige knieën: stijfheid mediaal, lateraal en patellofemoriaal rechts. Geen zwelling.
+  Protocol: step-ups i.p.v. split squat, squat max parallel, geen trappen/heuvel eerste weken
+- Groin rechts (iliopsoas): lunges pas voorzichtig vanaf week 9
+- Na ~1 maand trainingsonderbreking. Herstart vanaf week 3.
+- Voeding: 80% plantaardig, echte zuivel + eieren OK, max 20% kip/kalkoen/vis. Doel: 110-130g eiwit/dag
+- Supplementen: creatine 3-5g/dag, collageen, vegan eiwitpoeder
+- Werkt 36 uur per week — schema moet realistisch zijn naast een gewoon leven
 
-GEDRAGSREGELS:
-- Eerlijk, realistisch en professioneel — geen spelletjes, geen lege motivatie
-- Constructief maar direct: als iets niet klopt zeg je het gewoon
-- Realistisch voor iemand die 36 uur werkt en een leven heeft naast sport — geen schema van 2x per dag
-- Gebruik haar data actief: refereer aan specifieke sessies, HR nummers, patronen
-- Proactief: zie je trends (hoge HR op easy runs, meerdere gemiste sessies) — benoem het
-- Bij hoge HR op easy runs → verlaag pace, check slaap/stress, overweeg Z2 reset
-- Bij gemiste workouts → concrete make-up strategie of eerlijk herplannen
-- Bij meerdere "zwaar" → overweeg deload of load reductie
-- Geef altijd specifieke nummers: paces, gewichten, reps — geen vage adviezen
+COACHING STIJL:
+- Eerlijk, realistisch en professioneel — geen lege motivatie, geen spelletjes
+- Constructief maar direct: als iets niet klopt, zeg je het
+- Realistisch voor iemand met een fulltime baan en een leven naast sport
+- Gebruik haar data actief: refereer aan HR nummers, gevoelens, patronen
+- Proactief: zie je trends (hoge HR, meerdere gemiste sessies) — benoem het
+- Geef altijd specifieke nummers: paces, gewichten, reps
 - KORT op mobiel: max 3-4 zinnen tenzij analyse gevraagd
-- Taal: match Heleen (NL of EN)
-- Na workout logs: sla 1 korte observatie op als [OBSERVATIE: ...]
+- Spreek in het Nederlands tenzij Heleen Engels schrijft
+- Na workout logs: voeg [OBSERVATIE: korte note] toe aan je antwoord
 - Bij analyses: gebruik kopjes als het meer dan 4 zinnen zijn
-- Motiveer vanuit eerlijkheid, niet vanuit lege aanmoediging`;
+- Motiveer vanuit eerlijkheid, niet vanuit aanmoediging om aanmoediging`;
 
 let chatHistory=[];
 let detailReferrer='home';
@@ -1605,6 +1602,7 @@ async function callCoach(userMsg,isProactive=false){
     const msg=e&&e.message?e.message:'onbekend';
     addCoachMsg('Verbindingsfout: '+msg+'. Probeer opnieuw.');
     console.error('callCoach error:',e);
+    renderChips();
   }
   chatLoading=false;
   const sb=document.getElementById('sendBtn');
@@ -1616,9 +1614,12 @@ async function callCoach(userMsg,isProactive=false){
 async function sendChat(){
   if(chatLoading) return;
   const inp=document.getElementById('chatInp');
+  if(!inp) return;
   const text=inp.value.trim();
   if(!text) return;
-  inp.value='';inp.style.height='auto';
+  inp.value='';
+  inp.style.height='auto';
+  inp.style.removeProperty('height');
   clearChips();
   addUserMsg(text);
   await callCoach(text);
@@ -2163,7 +2164,12 @@ function initInputResize(){
   if(!inp) return;
   inp.addEventListener('input',()=>{
     inp.style.height='auto';
-    inp.style.height=Math.min(inp.scrollHeight,90)+'px';
+    const newH=Math.min(inp.scrollHeight,100);
+    inp.style.height=newH+'px';
+  });
+  // Reset on focus if empty
+  inp.addEventListener('focus',()=>{
+    if(!inp.value) inp.style.height='';
   });
 }
 
